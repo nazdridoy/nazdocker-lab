@@ -1,0 +1,50 @@
+# Docker lab environment .gitignore
+
+# Data directories
+data/
+logs/
+
+# Docker volumes
+volumes/
+
+# Environment files
+.env
+.env.local
+
+# Sensitive information
+SENSITIVE_INFO.md
+
+# SSH keys and configurations
+config/ssh/authorized_keys
+config/ssh/id_rsa
+config/ssh/id_rsa.pub
+
+# Ngrok configuration
+.ngrok2/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup 

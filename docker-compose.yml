@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  lab-environment:
+    build: .
+    container_name: student-lab
+    hostname: nazapilab
+    ports:
+      - "${SSH_PORT:-2222}:22"  # SSH port mapping
+    volumes:
+      - ./data:/data  # Persistent data storage
+      - ./data/admin:/home/admin  # Admin user home directory
+      - ./data/user1:/home/user1  # User1 home directory
+      - ./data/user2:/home/user2  # User2 home directory
+      - ./data/user3:/home/user3  # User3 home directory
+      - ./data/user4:/home/user4  # User4 home directory
+      - ./data/user5:/home/user5  # User5 home directory
+      - ./logs:/var/log  # Log files
+    environment:
+      - PLAYIT_SECRET_KEY=${PLAYIT_SECRET_KEY}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - USER_PASSWORD=${USER_PASSWORD}
+      - ROOT_PASSWORD=${ROOT_PASSWORD}
+    restart: unless-stopped
+    networks:
+      - lab-network
+
+networks:
+  lab-network:
+    driver: bridge
+
+volumes:
+  data:
+  logs: 
