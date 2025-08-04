@@ -314,6 +314,7 @@ docs/
 | `.env.example` | Environment template | None |
 
 ### Data Files
+
 | Directory | Purpose | Persistence |
 |-----------|---------|-------------|
 | `data/` | User home directories | Persistent |
@@ -321,6 +322,7 @@ docs/
 | `config/` | Configuration files | Persistent |
 
 ### Documentation Files
+
 | Directory | Purpose | Coverage |
 |-----------|---------|----------|
 | `docs/` | Modular documentation | Complete MANAGEMENT.md coverage |
