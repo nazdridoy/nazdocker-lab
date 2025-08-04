@@ -1,4 +1,4 @@
-FROM alpine:3.19
+FROM alpine:3.22
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive

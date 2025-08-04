@@ -2,7 +2,8 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Docker](https://img.shields.io/badge/Docker-Required-blue.svg)](https://www.docker.com/)
-[![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04-orange.svg)](https://ubuntu.com/)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04-orange.svg)](https://ubuntu.com/)
+[![Alpine](https://img.shields.io/badge/Alpine-3.22-lightblue.svg)](https://alpinelinux.org/)
 
 A secure, containerized development environment for educational and development purposes. This project provides a Docker-based lab environment with SSH access, multiple user accounts, and development tools, designed for learning, testing, and development workflows.
 
@@ -232,8 +233,8 @@ docker inspect student-lab | grep -A 10 "Healthcheck"
 ### Image Size Comparison
 | Version | Base Image | Final Size | Size Reduction |
 |---------|------------|------------|----------------|
-| **Ubuntu** | `ubuntu:22.04` | 968MB | - |
-| **Alpine** | `alpine:3.19` | 173MB | **82% smaller** |
+| **Ubuntu** | `ubuntu:24.04` | 1.05GB | - |
+| **Alpine** | `alpine:3.22` | 189MB | **82% smaller** |
 
 ### When to Use Each Version
 
@@ -255,6 +256,13 @@ docker inspect student-lab | grep -A 10 "Healthcheck"
 - **User Groups**: `sudo` (Ubuntu) vs `wheel` (Alpine)
 - **Build Time**: Alpine builds ~50% faster
 - **Startup Time**: Alpine starts ~30% faster
+
+### Resource Limits
+Both versions are configured with optimized resource limits:
+- **CPU**: Maximum 2 cores, minimum 1 core reserved
+- **Memory**: Maximum 2GB, minimum 1GB reserved
+- **Network**: Standard bridge networking
+- **Storage**: Persistent volumes for user data
 
 ## 📚 Documentation
 

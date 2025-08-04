@@ -813,6 +813,12 @@ services:
           memory: 1G
 ```
 
+**Current Configuration:**
+- **CPU Limits**: Maximum 2 cores, minimum 1 core reserved
+- **Memory Limits**: Maximum 2GB, minimum 1GB reserved
+- **Network**: Standard bridge networking
+- **Storage**: Persistent volumes for user data
+
 #### Volume Optimization
 ```yaml
 # In docker-compose.yml
@@ -1137,14 +1143,21 @@ nazdocker-lab/
 ### Image Size Comparison
 | Version | Base Image | Final Size | Size Reduction |
 |---------|------------|------------|----------------|
-| **Ubuntu** | `ubuntu:22.04` | 968MB | - |
-| **Alpine** | `alpine:3.19` | 173MB | **82% smaller** |
+| **Ubuntu** | `ubuntu:24.04` | 1.05GB | - |
+| **Alpine** | `alpine:3.22` | 189MB | **82% smaller** |
 
 ### Performance Benefits
 - **Build Time**: Alpine builds ~50% faster
 - **Startup Time**: Alpine starts ~30% faster
 - **Memory Usage**: Alpine uses ~40% less memory
-- **Disk Space**: Alpine saves 795MB per container
+- **Disk Space**: Alpine saves 861MB per container
+
+### Resource Limits
+Both versions are configured with optimized resource limits:
+- **CPU**: Maximum 2 cores, minimum 1 core reserved
+- **Memory**: Maximum 2GB, minimum 1GB reserved
+- **Network**: Standard bridge networking
+- **Storage**: Persistent volumes for user data
 
 ### When to Use Each Version
 
