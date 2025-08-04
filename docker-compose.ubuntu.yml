@@ -2,10 +2,12 @@ version: '3.8'
 
 services:
   lab-environment-ubuntu:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
     image: nazdocker-lab:ubuntu
-    container_name: student-lab
-    hostname: nazapilab
+    container_name: student-lab-ubuntu
+    hostname: nazapilab-ubuntu
     ports:
       - "${SSH_PORT:-2222}:22"  # SSH port mapping
     volumes:

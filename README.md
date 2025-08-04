@@ -43,8 +43,17 @@ cp .env.example .env
 ```
 
 ### 3. Start the Environment
+
+Choose your preferred version:
+
+**Ubuntu Version (Recommended for Development):**
 ```bash
-docker-compose up -d
+docker-compose -f docker-compose.ubuntu.yml up -d
+```
+
+**Alpine Version (Recommended for Production - 82% smaller):**
+```bash
+docker-compose -f docker-compose.alpine.yml up -d
 ```
 
 ### 4. Access the Lab
@@ -137,10 +146,10 @@ ssh admin@your-tunnel-url.playit.gg -p 12345
 
 ```
 nazdocker-lab/
-├── Dockerfile              # Ubuntu container definition with health checks
-├── Dockerfile.alpine       # Alpine container definition (173MB)
+├── Dockerfile.ubuntu       # Ubuntu container definition with health checks
+├── Dockerfile.alpine       # Alpine container definition (189MB)
 ├── start.sh               # Cross-platform startup script
-├── docker-compose.yml      # Ubuntu Docker Compose orchestration
+├── docker-compose.ubuntu.yml # Ubuntu Docker Compose orchestration
 ├── docker-compose.alpine.yml # Alpine Docker Compose orchestration
 ├── .env.example           # Environment variables template
 ├── README.md              # This file
@@ -161,7 +170,7 @@ nazdocker-lab/
 ### Ubuntu Version (Recommended for Development)
 ```bash
 # Start Ubuntu environment
-docker-compose up -d
+docker-compose -f docker-compose.ubuntu.yml up -d
 
 # SSH into lab
 ssh admin@localhost -p 2222
@@ -170,7 +179,7 @@ ssh admin@localhost -p 2222
 # Install packages: sudo apt-get install (admin only)
 
 # Stop when done
-docker-compose down
+docker-compose -f docker-compose.ubuntu.yml down
 ```
 
 ### Alpine Version (Recommended for Production)
@@ -191,13 +200,13 @@ docker-compose -f docker-compose.alpine.yml down
 ### Building Images
 ```bash
 # Build Ubuntu image
-docker-compose build
+docker-compose -f docker-compose.ubuntu.yml build
 
 # Build Alpine image
 docker-compose -f docker-compose.alpine.yml build
 
 # Build both images
-docker-compose build && docker-compose -f docker-compose.alpine.yml build
+docker-compose -f docker-compose.ubuntu.yml build && docker-compose -f docker-compose.alpine.yml build
 ```
 
 ## 🛡️ Security Considerations

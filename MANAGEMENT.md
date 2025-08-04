@@ -21,25 +21,25 @@ Comprehensive guide for managing and maintaining the NazDocker Lab environment.
 #### Ubuntu Version
 ```bash
 # Start the environment
-docker-compose up -d
+docker-compose -f docker-compose.ubuntu.yml up -d
 
 # Stop the environment
-docker-compose down
+docker-compose -f docker-compose.ubuntu.yml down
 
 # Restart the environment
-docker-compose restart
+docker-compose -f docker-compose.ubuntu.yml restart
 
 # View logs
-docker-compose logs -f
+docker-compose -f docker-compose.ubuntu.yml logs -f
 
 # Access container shell
-docker-compose exec lab-environment-ubuntu bash
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash
 
 # Validate configuration
-docker-compose config
+docker-compose -f docker-compose.ubuntu.yml config
 
 # Check container status
-docker-compose ps
+docker-compose -f docker-compose.ubuntu.yml ps
 ```
 
 #### Alpine Version (82% smaller)
@@ -77,19 +77,19 @@ docker ps
 docker ps -a
 
 # View container logs
-docker-compose logs lab-environment-ubuntu
+docker-compose -f docker-compose.ubuntu.yml logs lab-environment-ubuntu
 
 # Execute command in container
-docker-compose exec lab-environment-ubuntu <command>
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu <command>
 
 # Stop and remove everything
-docker-compose down -v --remove-orphans
+docker-compose -f docker-compose.ubuntu.yml down -v --remove-orphans
 
 # Check container health status
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
 
 # View detailed health information
-docker inspect student-lab | grep -A 20 "Health"
+docker inspect student-lab-ubuntu | grep -A 20 "Health"
 ```
 
 #### Alpine Version
@@ -1108,10 +1108,10 @@ echo "Alpine backup completed: $BACKUP_DIR"
 
 ```
 nazdocker-lab/
-├── Dockerfile              # Ubuntu container definition with health checks
-├── Dockerfile.alpine       # Alpine container definition (173MB)
+├── Dockerfile.ubuntu       # Ubuntu container definition
+├── Dockerfile.alpine       # Alpine container definition
 ├── start.sh               # Cross-platform startup script
-├── docker-compose.yml      # Ubuntu Docker Compose orchestration
+├── docker-compose.ubuntu.yml # Ubuntu Docker Compose orchestration
 ├── docker-compose.alpine.yml # Alpine Docker Compose orchestration
 ├── .env.example           # Environment variables template
 ├── README.md              # Project documentation
