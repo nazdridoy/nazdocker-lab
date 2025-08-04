@@ -32,6 +32,7 @@ Detailed comparison between Alpine and Ubuntu versions of NazDocker Lab.
 ## 🔧 Technical Differences
 
 ### Package Management
+
 | Aspect | Ubuntu | Alpine |
 |--------|--------|--------|
 | **Package Manager** | `apt` | `apk` |
@@ -41,6 +42,7 @@ Detailed comparison between Alpine and Ubuntu versions of NazDocker Lab.
 | **Search Command** | `apt search` | `apk search` |
 
 ### Service Management
+
 | Aspect | Ubuntu | Alpine |
 |--------|--------|--------|
 | **Service Command** | `service ssh status` | `pgrep sshd` |
@@ -49,6 +51,7 @@ Detailed comparison between Alpine and Ubuntu versions of NazDocker Lab.
 | **Restart Service** | `service ssh restart` | `rc-service sshd restart` |
 
 ### User Management
+
 | Aspect | Ubuntu | Alpine |
 |--------|--------|--------|
 | **Sudo Group** | `sudo` | `wheel` |
@@ -204,6 +207,7 @@ Both versions are configured with optimized resource limits:
 | **Storage** | Persistent volumes | User data |
 
 ### Performance Metrics
+
 | Metric | Alpine | Ubuntu | Improvement |
 |--------|--------|--------|-------------|
 | **Startup Time** | ~15s | ~22s | 32% faster |

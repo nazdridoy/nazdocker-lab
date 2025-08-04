@@ -22,6 +22,9 @@ config/ssh/id_rsa.pub
 # Ngrok configuration
 .ngrok2/
 
+# Obsidian configuration
+docs/.obsidian
+
 # Log files
 *.log
 

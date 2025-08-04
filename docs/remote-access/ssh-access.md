@@ -27,6 +27,7 @@ ssh root@localhost -p 2222
 ```
 
 ### Default Credentials
+
 | Username | Default Password | Sudo Access |
 |----------|------------------|-------------|
 | `admin` | `admin123` | ✅ Yes |

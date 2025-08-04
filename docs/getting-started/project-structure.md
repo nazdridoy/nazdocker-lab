@@ -13,47 +13,48 @@ Complete overview of NazDocker Lab project structure and file organization.
 ## 📁 Project Structure
 
 ```
-nazdocker-lab/
-├── Dockerfile.ubuntu       # Ubuntu container definition
-├── Dockerfile.alpine       # Alpine container definition
-├── start.sh               # Cross-platform startup script
-├── docker-compose.ubuntu.yml # Ubuntu Docker Compose orchestration
-├── docker-compose.alpine.yml # Alpine Docker Compose orchestration
-├── .env.example           # Environment variables template
-├── README.md              # Project documentation
-├── MANAGEMENT.md          # Legacy comprehensive guide
-├── LICENSE                # GPL v3 license
-├── data/                  # Persistent user data (separated by container type)
-│   ├── alpine/           # Alpine container data
-│   │   ├── admin/        # Admin home directory (Alpine)
-│   │   ├── user1/        # User1 home directory (Alpine)
-│   │   ├── user2/        # User2 home directory (Alpine)
-│   │   ├── user3/        # User3 home directory (Alpine)
-│   │   ├── user4/        # User4 home directory (Alpine)
-│   │   └── user5/        # User5 home directory (Alpine)
-│   └── ubuntu/           # Ubuntu container data
-│       ├── admin/        # Admin home directory (Ubuntu)
-│       ├── user1/        # User1 home directory (Ubuntu)
-│       ├── user2/        # User2 home directory (Ubuntu)
-│       ├── user3/        # User3 home directory (Ubuntu)
-│       ├── user4/        # User4 home directory (Ubuntu)
-│       └── user5/        # User5 home directory (Ubuntu)
-├── logs/                 # Application logs (separated by container type)
-│   ├── alpine/           # Alpine container logs
-│   └── ubuntu/           # Ubuntu container logs
-├── config/               # Configuration files
-│   └── ssh/             # SSH configuration
-└── docs/                # Modular documentation
-    ├── README.md        # Documentation index
-    ├── getting-started/ # Getting started guides
-    ├── user-management/ # User management guides
-    ├── administration/  # Administration guides
-    ├── remote-access/   # Remote access guides
-    ├── development/     # Development guides
-    ├── security/        # Security guides
-    ├── alpine-ubuntu/   # Alpine vs Ubuntu guides
-    ├── troubleshooting/ # Troubleshooting guides
-    └── maintenance/     # Maintenance guides
+nazdocker-lab/                                                                     
+├── Dockerfile.ubuntu           # Ubuntu container definition                      
+├── Dockerfile.alpine           # Alpine container definition                      
+├── start.sh                    # Cross-platform startup script                    
+├── docker-compose.ubuntu.yml   # Ubuntu Docker Compose orchestration              
+├── docker-compose.alpine.yml   # Alpine Docker Compose orchestration              
+├── .env.example                # Environment variables template                   
+├── README.md                   # Project documentation                            
+├── MANAGEMENT.md               # Legacy comprehensive guide                       
+├── LICENSE                     # GPL v3 license                                   
+├── data/                       # Persistent user data (separated by container type)
+│   ├── alpine/                 # Alpine container data                            
+│   │   ├── admin/              # Admin home directory (Alpine)                    
+│   │   ├── user1/              # User1 home directory (Alpine)                    
+│   │   ├── user2/              # User2 home directory (Alpine)                    
+│   │   ├── user3/              # User3 home directory (Alpine)                    
+│   │   ├── user4/              # User4 home directory (Alpine)                    
+│   │   └── user5/              # User5 home directory (Alpine)                    
+│   └── ubuntu/                 # Ubuntu container data                            
+│       ├── admin/              # Admin home directory (Ubuntu)                    
+│       ├── user1/              # User1 home directory (Ubuntu)                    
+│       ├── user2/              # User2 home directory (Ubuntu)                    
+│       ├── user3/              # User3 home directory (Ubuntu)                    
+│       ├── user4/              # User4 home directory (Ubuntu)                    
+│       └── user5/              # User5 home directory (Ubuntu)                    
+├── logs/                       # Application logs (separated by container type)   
+│   ├── alpine/                 # Alpine container logs                            
+│   └── ubuntu/                 # Ubuntu container logs                            
+├── config/                     # Configuration files                              
+│   └── ssh/                    # SSH configuration                                
+└── docs/                       # Modular documentation                            
+    ├── README.md               # Documentation index                              
+    ├── getting-started/        # Getting started guides                           
+    ├── user-management/        # User management guides                           
+    ├── administration/         # Administration guides                            
+    ├── remote-access/          # Remote access guides                             
+    ├── development/            # Development guides                               
+    ├── security/               # Security guides                                  
+    ├── alpine-ubuntu/          # Alpine vs Ubuntu guides                          
+    ├── troubleshooting/        # Troubleshooting guides                           
+    └── maintenance/            # Maintenance guides                               
+
 ```
 
 ## 🔧 Key Files Explained
@@ -223,7 +224,7 @@ data/
 │   ├── Documents/    # User documents
 │   ├── Downloads/    # Downloaded files
 │   ├── Projects/     # User projects
-│   └── .ssh/        # SSH keys and configuration
+│   └── .ssh/         # SSH keys and configuration
 ├── user1/            # User1 home directory
 ├── user2/            # User2 home directory
 ├── user3/            # User3 home directory
@@ -251,10 +252,10 @@ data/
 **Structure**:
 ```
 config/
-└── ssh/             # SSH configuration
-    ├── sshd_config  # SSH server configuration
+└── ssh/                # SSH configuration
+    ├── sshd_config     # SSH server configuration
     ├── authorized_keys # SSH public keys
-    └── known_hosts  # Known host keys
+    └── known_hosts     # Known host keys
 ```
 
 ### Documentation Structure
@@ -263,42 +264,43 @@ config/
 **Purpose**: Modular documentation system
 **Structure**:
 ```
-docs/
-├── README.md                    # Documentation index
-├── getting-started/            # Getting started guides
-│   ├── quick-start.md          # Quick start guide
-│   └── project-structure.md    # This file
-├── user-management/            # User management guides
-│   ├── user-accounts.md        # User account management
-│   ├── passwords.md            # Password management
-│   └── ssh-keys.md            # SSH key setup
-├── administration/             # Administration guides
-│   ├── container-management.md # Container operations
-│   ├── environment-variables.md # Configuration management
-│   ├── health-monitoring.md   # System health monitoring
-│   ├── backup-recovery.md     # Data backup and restoration
-│   ├── advanced-configuration.md # Advanced configuration
-│   └── useful-scripts.md      # Management scripts
-├── remote-access/             # Remote access guides
-│   ├── ssh-access.md          # SSH access guide
-│   └── playit-tunneling.md    # Playit.gg tunneling
-├── development/               # Development guides
-│   └── available-tools.md     # Available development tools
-├── security/                  # Security guides
-│   └── security-overview.md   # Security architecture
-├── alpine-ubuntu/             # Alpine vs Ubuntu guides
-│   └── comparison.md          # Detailed comparison
-├── troubleshooting/           # Troubleshooting guides
-│   ├── common-issues.md       # Common problems
-│   ├── diagnostics.md         # Diagnostic commands
-│   └── emergency.md           # Emergency procedures
-└── maintenance/               # Maintenance guides
-    └── regular-maintenance.md # Maintenance procedures
+docs/                                                          
+├── README.md                     # Documentation index        
+├── getting-started/              # Getting started guides     
+│   ├── quick-start.md            # Quick start guide          
+│   └── project-structure.md      # This file                  
+├── user-management/              # User management guides     
+│   ├── user-accounts.md          # User account management    
+│   ├── passwords.md              # Password management        
+│   └── ssh-keys.md               # SSH key setup              
+├── administration/               # Administration guides      
+│   ├── container-management.md   # Container operations       
+│   ├── environment-variables.md  # Configuration management   
+│   ├── health-monitoring.md      # System health monitoring   
+│   ├── backup-recovery.md        # Data backup and restoration
+│   ├── advanced-configuration.md # Advanced configuration     
+│   └── useful-scripts.md         # Management scripts         
+├── remote-access/                # Remote access guides       
+│   ├── ssh-access.md             # SSH access guide           
+│   └── playit-tunneling.md       # Playit.gg tunneling        
+├── development/                  # Development guides         
+│   └── available-tools.md        # Available development tools
+├── security/                     # Security guides            
+│   └── security-overview.md      # Security architecture      
+├── alpine-ubuntu/                # Alpine vs Ubuntu guides    
+│   └── comparison.md             # Detailed comparison        
+├── troubleshooting/              # Troubleshooting guides     
+│   ├── common-issues.md          # Common problems            
+│   ├── diagnostics.md            # Diagnostic commands        
+│   └── emergency.md              # Emergency procedures       
+└── maintenance/                  # Maintenance guides         
+    └── regular-maintenance.md    # Maintenance procedures     
 ```
 
 ## 📋 File Purposes and Relationships
 
 ### Core Files
+
 | File | Purpose | Dependencies |
 |------|---------|--------------|
 | `Dockerfile.ubuntu` | Ubuntu container definition | `start.sh` |

@@ -121,6 +121,7 @@ ls -la ~/.ssh/
 ```
 
 ### Key Types Comparison
+
 | Key Type | Security | Performance | Compatibility |
 |----------|----------|-------------|---------------|
 | **Ed25519** | High | Fast | Modern systems |
