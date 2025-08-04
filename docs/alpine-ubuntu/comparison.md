@@ -40,6 +40,7 @@ Detailed comparison between Alpine and Ubuntu versions of NazDocker Lab.
 | **Install Command** | `apt-get install` | `apk add` |
 | **Remove Command** | `apt-get remove` | `apk del` |
 | **Search Command** | `apt search` | `apk search` |
+| **Python Package Manager** | `uv` (installed via installer) | `uv` (via apk) |
 
 ### Service Management
 
@@ -129,6 +130,36 @@ docker-compose -f docker-compose.ubuntu.yml down
 docker-compose -f docker-compose.alpine.yml down
 ```
 
+### Python Development Tools
+
+Both Alpine and Ubuntu containers include modern Python development tools:
+
+#### Ubuntu Container
+```bash
+# uv is installed via official installer
+uv --version
+uvx --version
+
+# Python development workflow
+uv init myproject
+uv add requests flask
+uv run myproject/main.py
+uvx ruff check
+```
+
+#### Alpine Container
+```bash
+# uv is installed via apk package manager
+uv --version
+uvx --version
+
+# Python development workflow
+uv init myproject
+uv add requests flask
+uv run myproject/main.py
+uvx ruff check
+```
+
 ### Package Installation
 
 #### Ubuntu
@@ -185,6 +216,7 @@ apk search package_name
 - **CI/CD pipelines** where build speed is important
 - **Microservices** architecture
 - **Edge computing** with limited resources
+- **Python development** with `uv` in minimal environment
 
 ### Use Ubuntu When:
 - **Maximum compatibility** is needed
@@ -194,6 +226,7 @@ apk search package_name
 - **Legacy applications** that depend on Ubuntu
 - **Full system utilities** are needed
 - **Educational purposes** where familiarity matters
+- **Python development** with latest `uv` features
 
 ## 📈 Resource Limits
 

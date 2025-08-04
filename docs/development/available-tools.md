@@ -28,6 +28,37 @@ source myenv/bin/activate
 python3 script.py
 ```
 
+### uv - Fast Python Package Manager
+```bash
+# Check uv version
+uv --version
+
+# Initialize new project
+uv init myproject
+
+# Add dependencies
+uv add requests
+uv add flask django
+
+# Run Python scripts
+uv run script.py
+
+# Run tools in ephemeral environment
+uvx ruff check
+uvx black .
+uvx pytest
+
+# Install tools globally
+uv tool install ruff
+uv tool install black
+
+# Create virtual environment
+uv venv
+
+# Sync dependencies
+uv sync
+```
+
 ### Common Python Packages
 ```bash
 # Web development

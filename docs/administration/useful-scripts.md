@@ -203,6 +203,14 @@ echo "Recent login activity:"
 docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
 tail -10 /var/log/auth.log | grep -E '(Accepted|Failed)'
 "
+echo ""
+
+echo "Available Python tools:"
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
+echo 'Python version:' && python3 --version
+echo 'uv version:' && uv --version
+echo 'uvx version:' && uvx --version
+"
 ```
 
 ## 🏥 Health Monitoring Scripts
@@ -612,6 +620,41 @@ echo ""
 echo "4. Network Connections:"
 docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
 netstat -tulpn | grep ssh
+"
+echo ""
+```
+
+### Python Development Monitor
+```bash
+#!/bin/bash
+# python-dev-monitor.sh
+
+echo "=== Python Development Monitor ==="
+echo ""
+
+echo "1. Python Environment:"
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
+echo 'Python version:' && python3 --version
+echo 'uv version:' && uv --version
+echo 'uvx version:' && uvx --version
+"
+echo ""
+
+echo "2. Installed Python Packages:"
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
+pip3 list | head -20
+"
+echo ""
+
+echo "3. uv Projects:"
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
+find /home -name 'pyproject.toml' -o -name 'uv.lock' 2>/dev/null | head -10
+"
+echo ""
+
+echo "4. Python Processes:"
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
+ps aux | grep python | grep -v grep
 "
 echo ""
 ```

@@ -70,6 +70,7 @@ nazdocker-lab/
 - Health checks for SSH service availability
 - Cross-platform startup script integration
 - Package management with apt
+- **uv** Python package manager installation
 
 **Key Sections**:
 ```dockerfile
@@ -99,6 +100,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 - Package management with apk
 - Same functionality as Ubuntu version
 - Optimized for security and performance
+- **uv** Python package manager installation
 
 **Key Sections**:
 ```dockerfile

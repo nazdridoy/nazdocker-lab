@@ -23,6 +23,7 @@ RUN apk update && apk add --no-cache \
     gnupg \
     bash \
     shadow \
+    uv \
     && rm -rf /var/cache/apk/*
 
 # Create users (home directories will be mounted from host)

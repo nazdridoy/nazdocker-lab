@@ -109,6 +109,8 @@ ssh user1@localhost -p 2222
 ## 🛠️ What's Available
 
 - **Python 3.x** with pip
+- **uv** - Fast Python package manager (replaces pip, pip-tools, pipx, poetry, pyenv, virtualenv)
+- **uvx** - Run Python tools in ephemeral environments
 - **Node.js** with npm
 - **Git** for version control
 - **SSH** server for remote access

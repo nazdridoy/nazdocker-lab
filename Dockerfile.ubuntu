@@ -42,6 +42,12 @@ RUN mkdir -p /var/run/sshd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
+# Install uv (Python package manager)
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    mv /root/.local/bin/uv /usr/local/bin/uv && \
+    mv /root/.local/bin/uvx /usr/local/bin/uvx && \
+    rm -rf /root/.local
+
 # Install playit.gg agent
 RUN wget https://github.com/playit-cloud/playit-agent/releases/download/v0.16.2/playit-linux-amd64 && \
     mv playit-linux-amd64 /usr/local/bin/playit-agent && \

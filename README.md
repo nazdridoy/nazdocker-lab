@@ -133,6 +133,8 @@ ssh admin@your-tunnel-url.playit.gg -p 12345
 
 ### Development Tools
 - **Python 3.x** with pip package manager
+- **uv** - Fast Python package manager (replaces pip, pip-tools, pipx, poetry, pyenv, virtualenv)
+- **uvx** - Run Python tools in ephemeral environments
 - **Node.js** with npm package manager
 - **Git** for version control
 - **SSH** server for remote access
@@ -142,7 +144,7 @@ ssh admin@your-tunnel-url.playit.gg -p 12345
 - **jq** for JSON processing
 - **ping** for network testing
 - **ifconfig** for network configuration
-- **apt** package manager
+- **apt** package manager (Ubuntu) / **apk** package manager (Alpine)
 
 ## 📁 Project Structure
 
@@ -190,6 +192,12 @@ ssh admin@localhost -p 2222
 # Develop in your persistent home directory
 # Install packages: sudo apt-get install (admin only)
 
+# Use uv for Python development
+uv init myproject          # Create new Python project
+uv add requests            # Add dependency
+uv run myproject/main.py   # Run Python script
+uvx ruff check            # Run linter in ephemeral environment
+
 # Stop when done
 docker-compose -f docker-compose.ubuntu.yml down
 ```
@@ -204,6 +212,12 @@ ssh admin@localhost -p 2222
 
 # Develop in your persistent home directory
 # Install packages: sudo apk add (admin only)
+
+# Use uv for Python development
+uv init myproject          # Create new Python project
+uv add requests            # Add dependency
+uv run myproject/main.py   # Run Python script
+uvx ruff check            # Run linter in ephemeral environment
 
 # Stop when done
 docker-compose -f docker-compose.alpine.yml down
