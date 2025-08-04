@@ -267,6 +267,56 @@ docker rmi $(docker images -q)
 docker system prune -a --volumes
 ```
 
+## 🔐 Alpine Sudo Issues
+
+### Admin User Can't Use Sudo
+```bash
+# Check if admin is in wheel group (Alpine)
+docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine groups admin
+
+# Check sudoers configuration
+docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine cat /etc/sudoers
+
+# Fix sudo configuration for Alpine (if needed)
+docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine bash -c "
+if ! grep -q '%wheel ALL=(ALL) ALL' /etc/sudoers; then
+    echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
+    echo 'Sudo configuration fixed for Alpine'
+else
+    echo 'Sudo configuration already correct'
+fi
+"
+
+# Test sudo access
+docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine bash -c "
+sudo whoami
+"
+```
+
+### Alpine vs Ubuntu Sudo Differences
+- **Alpine**: Uses `wheel` group, requires `%wheel ALL=(ALL) ALL` in sudoers
+- **Ubuntu**: Uses `sudo` group, requires `%sudo ALL=(ALL:ALL) ALL` in sudoers
+
+### Permanent Fix: Rebuild Alpine Container
+```bash
+# The fix is already in Dockerfile.alpine - rebuild to apply
+docker-compose -f docker-compose.alpine.yml down
+docker-compose -f docker-compose.alpine.yml build --no-cache
+docker-compose -f docker-compose.alpine.yml up -d
+
+# Test sudo access after rebuild
+docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine bash -c "
+sudo whoami && echo 'Sudo access confirmed'
+"
+```
+
+### Root Cause
+The issue was in the Alpine Dockerfile - while the admin user was correctly added to the `wheel` group, the sudoers file wasn't configured to allow the wheel group to use sudo. This has been fixed in `Dockerfile.alpine` by adding:
+```dockerfile
+RUN addgroup admin wheel && \
+    echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+```
+
 ## 🔍 Diagnostic Commands
 
 ### Quick Health Check

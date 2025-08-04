@@ -55,7 +55,8 @@ Detailed comparison between Alpine and Ubuntu versions of NazDocker Lab.
 | Aspect | Ubuntu | Alpine |
 |--------|--------|--------|
 | **Sudo Group** | `sudo` | `wheel` |
-| **Add to Sudo** | `usermod -aG sudo` | `usermod -aG wheel` |
+| **Add to Sudo** | `usermod -aG sudo` | `addgroup admin wheel` |
+| **Sudoers Config** | `%sudo ALL=(ALL:ALL) ALL` | `%wheel ALL=(ALL) ALL` |
 | **Check Sudo** | `getent group sudo` | `getent group wheel` |
 
 ## 💾 Volume Management

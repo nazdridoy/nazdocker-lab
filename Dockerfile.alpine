@@ -35,8 +35,9 @@ RUN adduser -D -s /bin/bash admin && \
 
 # Note: passwords will be set at runtime via environment variables
 
-# Add admin to sudo group
-RUN addgroup admin wheel
+# Add admin to sudo group and configure sudoers
+RUN addgroup admin wheel && \
+    echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 # Configure SSH
 RUN mkdir -p /var/run/sshd && \

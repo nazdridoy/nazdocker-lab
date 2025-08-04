@@ -109,10 +109,11 @@ RUN apk add --no-cache \
     curl \
     wget
 
-# Create users
+# Create users and configure sudo
 RUN adduser -D -s /bin/bash admin && \
     echo "admin:admin123" | passwd admin && \
-    addgroup admin wheel
+    addgroup admin wheel && \
+    echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
