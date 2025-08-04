@@ -11,14 +11,14 @@ services:
     ports:
       - "${SSH_PORT:-2222}:22"  # SSH port mapping
     volumes:
-      - ./data:/data  # Persistent data storage
-      - ./data/admin:/home/admin  # Admin user home directory
-      - ./data/user1:/home/user1  # User1 home directory
-      - ./data/user2:/home/user2  # User2 home directory
-      - ./data/user3:/home/user3  # User3 home directory
-      - ./data/user4:/home/user4  # User4 home directory
-      - ./data/user5:/home/user5  # User5 home directory
-      - ./logs:/var/log  # Log files
+      - ./data/ubuntu:/data  # Persistent data storage for Ubuntu
+      - ./data/ubuntu/admin:/home/admin  # Admin user home directory
+      - ./data/ubuntu/user1:/home/user1  # User1 home directory
+      - ./data/ubuntu/user2:/home/user2  # User2 home directory
+      - ./data/ubuntu/user3:/home/user3  # User3 home directory
+      - ./data/ubuntu/user4:/home/user4  # User4 home directory
+      - ./data/ubuntu/user5:/home/user5  # User5 home directory
+      - ./logs/ubuntu:/var/log  # Log files for Ubuntu
     environment:
       - PLAYIT_SECRET_KEY=${PLAYIT_SECRET_KEY}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
@@ -41,5 +41,5 @@ networks:
     driver: bridge
 
 volumes:
-  data:
-  logs: 
+  data-ubuntu:
+  logs-ubuntu: 

@@ -85,9 +85,9 @@ NazDocker Lab is a secure, containerized development environment that provides:
 - **Multi-User Environment**: 6 pre-configured user accounts
 - **Public SSH Access**: Secure remote access via playit.gg tunneling
 - **Development Tools**: Python 3.x, Node.js, Git, and essential utilities
-- **Persistent Storage**: User data persists across container restarts
+- **Persistent Storage**: User data persists across container restarts with separate volumes for Alpine and Ubuntu
 - **Health Monitoring**: Built-in health checks for SSH service availability
-- **Alpine & Ubuntu Support**: Choose between lightweight Alpine or full Ubuntu
+- **Alpine & Ubuntu Support**: Choose between lightweight Alpine or full Ubuntu with isolated data storage
 
 ## 🔗 Related Resources
 

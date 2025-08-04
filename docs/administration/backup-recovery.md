@@ -14,11 +14,20 @@ Complete guide for backing up and recovering NazDocker Lab data and configuratio
 
 ### User Data Backup
 ```bash
-# Backup all user data
+# Backup all user data (both Alpine and Ubuntu)
 tar -czf lab-backup-$(date +%Y%m%d-%H%M%S).tar.gz data/
 
-# Backup specific user
-tar -czf user1-backup-$(date +%Y%m%d-%H%M%S).tar.gz data/user1/
+# Backup Alpine data only
+tar -czf alpine-backup-$(date +%Y%m%d-%H%M%S).tar.gz data/alpine/
+
+# Backup Ubuntu data only
+tar -czf ubuntu-backup-$(date +%Y%m%d-%H%M%S).tar.gz data/ubuntu/
+
+# Backup specific user (Alpine)
+tar -czf alpine-user1-backup-$(date +%Y%m%d-%H%M%S).tar.gz data/alpine/user1/
+
+# Backup specific user (Ubuntu)
+tar -czf ubuntu-user1-backup-$(date +%Y%m%d-%H%M%S).tar.gz data/ubuntu/user1/
 
 # Backup with compression and exclusions
 tar -czf lab-backup-$(date +%Y%m%d).tar.gz data/ --exclude='*.tmp' --exclude='*.log'
@@ -64,14 +73,24 @@ echo "Backup completed: $BACKUP_DIR"
 
 ### Restore User Data
 ```bash
-# Restore all data
+# Restore all data (both Alpine and Ubuntu)
 tar -xzf lab-backup-20231201-143022.tar.gz
 
-# Restore specific user
-tar -xzf user1-backup-20231201-143022.tar.gz
+# Restore Alpine data only
+tar -xzf alpine-backup-20231201-143022.tar.gz
+
+# Restore Ubuntu data only
+tar -xzf ubuntu-backup-20231201-143022.tar.gz
+
+# Restore specific user (Alpine)
+tar -xzf alpine-user1-backup-20231201-143022.tar.gz
+
+# Restore specific user (Ubuntu)
+tar -xzf ubuntu-user1-backup-20231201-143022.tar.gz
 
 # Verify restoration
-ls -la data/
+ls -la data/alpine/
+ls -la data/ubuntu/
 ```
 
 ### Restore Configuration
@@ -240,14 +259,22 @@ echo "Incremental backup completed: $BACKUP_DIR"
 ```
 backups/
 ├── 20231201-143022/
-│   ├── user-data.tar.gz
+│   ├── user-data.tar.gz          # All user data (Alpine + Ubuntu)
+│   ├── alpine-data.tar.gz        # Alpine data only
+│   ├── ubuntu-data.tar.gz        # Ubuntu data only
 │   ├── docker-compose.ubuntu.yml
+│   ├── docker-compose.alpine.yml
 │   ├── Dockerfile.ubuntu
+│   ├── Dockerfile.alpine
 │   └── container-status.txt
 ├── 20231202-091500/
 │   ├── user-data.tar.gz
+│   ├── alpine-data.tar.gz
+│   ├── ubuntu-data.tar.gz
 │   ├── docker-compose.ubuntu.yml
+│   ├── docker-compose.alpine.yml
 │   ├── Dockerfile.ubuntu
+│   ├── Dockerfile.alpine
 │   └── container-status.txt
 └── last-backup.txt
 ```

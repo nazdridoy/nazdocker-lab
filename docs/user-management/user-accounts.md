@@ -197,11 +197,20 @@ done
 
 ### Managing User Data
 ```bash
-# Backup user data
-tar -czf user-backup-$(date +%Y%m%d).tar.gz data/
+# Backup user data (Ubuntu)
+tar -czf ubuntu-user-backup-$(date +%Y%m%d).tar.gz data/ubuntu/
 
-# Restore user data
-tar -xzf user-backup-20231201.tar.gz
+# Backup user data (Alpine)
+tar -czf alpine-user-backup-$(date +%Y%m%d).tar.gz data/alpine/
+
+# Backup all user data
+tar -czf all-user-backup-$(date +%Y%m%d).tar.gz data/
+
+# Restore user data (Ubuntu)
+tar -xzf ubuntu-user-backup-20231201.tar.gz
+
+# Restore user data (Alpine)
+tar -xzf alpine-user-backup-20231201.tar.gz
 
 # Check disk usage per user
 docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
@@ -210,6 +219,69 @@ du -sh /home/* | sort -hr
 ```
 
 ## 🔧 User Management Scripts
+
+### Multi-Container User Management
+```bash
+#!/bin/bash
+# multi-container-user-management.sh
+
+ACTION=$1
+USERNAME=$2
+CONTAINER_TYPE=$3
+
+case $ACTION in
+    "add")
+        if [ "$CONTAINER_TYPE" = "alpine" ]; then
+            docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine bash -c "
+                adduser -D -s /bin/bash $USERNAME
+                echo '$USERNAME:password123' | passwd $USERNAME
+                echo 'User $USERNAME created in Alpine with password: password123'
+            "
+        elif [ "$CONTAINER_TYPE" = "ubuntu" ]; then
+            docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
+                useradd -m -s /bin/bash $USERNAME
+                echo '$USERNAME:password123' | chpasswd
+                echo 'User $USERNAME created in Ubuntu with password: password123'
+            "
+        else
+            echo "Usage: $0 add <username> {alpine|ubuntu}"
+        fi
+        ;;
+    "remove")
+        if [ "$CONTAINER_TYPE" = "alpine" ]; then
+            docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine bash -c "
+                deluser -r $USERNAME
+                echo 'User $USERNAME removed from Alpine'
+            "
+        elif [ "$CONTAINER_TYPE" = "ubuntu" ]; then
+            docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
+                userdel -r $USERNAME
+                echo 'User $USERNAME removed from Ubuntu'
+            "
+        else
+            echo "Usage: $0 remove <username> {alpine|ubuntu}"
+        fi
+        ;;
+    "list")
+        echo "=== Alpine Users ==="
+        docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine bash -c "
+            cat /etc/passwd | grep -E ':(/bin/bash|/bin/sh)$'
+        "
+        echo ""
+        echo "=== Ubuntu Users ==="
+        docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
+            cat /etc/passwd | grep -E ':(/bin/bash|/bin/sh)$'
+        "
+        ;;
+    *)
+        echo "Usage: $0 {add|remove|list} [username] [alpine|ubuntu]"
+        echo "Examples:"
+        echo "  $0 add newuser ubuntu"
+        echo "  $0 remove olduser alpine"
+        echo "  $0 list"
+        ;;
+esac
+```
 
 ### Status Check Script
 ```bash

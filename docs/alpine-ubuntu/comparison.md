@@ -55,6 +55,25 @@ Detailed comparison between Alpine and Ubuntu versions of NazDocker Lab.
 | **Add to Sudo** | `usermod -aG sudo` | `usermod -aG wheel` |
 | **Check Sudo** | `getent group sudo` | `getent group wheel` |
 
+## 💾 Volume Management
+
+### Separate Volume Structure
+
+Both Alpine and Ubuntu versions use separate volume directories to ensure complete isolation:
+
+- **Alpine Container**: Data in `./data/alpine/`, logs in `./logs/alpine/`
+- **Ubuntu Container**: Data in `./data/ubuntu/`, logs in `./logs/ubuntu/`
+
+This allows both containers to run simultaneously without data conflicts.
+
+### Benefits of Separate Volumes
+
+- **🔒 Complete Isolation**: Alpine and Ubuntu containers have completely separate data storage
+- **🚀 Concurrent Operation**: Both container types can run simultaneously without conflicts
+- **📦 Easy Management**: Backup, restore, or manage data for each container type separately
+- **🧹 Clean Organization**: Clear separation makes it obvious which data belongs to which container
+- **🔄 Independent Scaling**: Scale Alpine and Ubuntu environments independently
+
 ## 🚀 Commands Comparison
 
 ### Container Management
@@ -87,6 +106,23 @@ docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine bash
 
 # Check health
 docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine pgrep sshd
+```
+
+### Running Both Containers Simultaneously
+```bash
+# Start both environments
+docker-compose -f docker-compose.ubuntu.yml up -d
+docker-compose -f docker-compose.alpine.yml up -d
+
+# Access Ubuntu lab (port 2222)
+ssh admin@localhost -p 2222
+
+# Access Alpine lab (port 2223 - modify SSH_PORT in .env)
+ssh admin@localhost -p 2223
+
+# Stop both environments
+docker-compose -f docker-compose.ubuntu.yml down
+docker-compose -f docker-compose.alpine.yml down
 ```
 
 ### Package Installation

@@ -169,10 +169,12 @@ docker-compose -f docker-compose.ubuntu.yml config > resolved-config.yml
 docker inspect student-lab-ubuntu | grep -A 10 "Mounts"
 
 # Check data directory permissions
-ls -la data/
+ls -la data/alpine/
+ls -la data/ubuntu/
 
 # Recreate data directories
-mkdir -p data/{admin,user1,user2,user3,user4,user5}
+mkdir -p data/{alpine,ubuntu}/{admin,user1,user2,user3,user4,user5}
+mkdir -p logs/{alpine,ubuntu}
 chmod 755 data/
 ```
 

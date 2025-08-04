@@ -13,7 +13,7 @@ A secure, containerized development environment for educational and development 
 - **🔐 Multi-User Environment**: 6 pre-configured user accounts (admin + 5 regular users)
 - **🌐 Public SSH Access**: Secure remote access via playit.gg tunneling
 - **🛠️ Development Tools**: Python 3.x, Node.js, Git, and essential utilities
-- **💾 Persistent Storage**: User data persists across container restarts
+- **💾 Persistent Storage**: User data persists across container restarts with separate volumes for Alpine and Ubuntu
 - **⚙️ Runtime Configuration**: Environment-based configuration management
 - **🔒 Security Focused**: Proper user isolation and SSH key support
 - **🏥 Health Monitoring**: Built-in health checks for SSH service availability
@@ -35,8 +35,9 @@ cd nazdocker-lab
 
 ### 2. Set Up Environment
 ```bash
-# Create data directories
-mkdir -p data/{admin,user1,user2,user3,user4,user5}
+# Create separate data directories for Alpine and Ubuntu
+mkdir -p data/{alpine,ubuntu}/{admin,user1,user2,user3,user4,user5}
+mkdir -p logs/{alpine,ubuntu}
 
 # Configure environment variables
 cp .env.example .env
@@ -156,14 +157,24 @@ nazdocker-lab/
 ├── README.md              # This file
 ├── docs/                 # Modular documentation
 ├── LICENSE                # GPL v3 license
-├── data/                  # Persistent user data
-│   ├── admin/            # Admin home directory
-│   ├── user1/            # User1 home directory
-│   ├── user2/            # User2 home directory
-│   ├── user3/            # User3 home directory
-│   ├── user4/            # User4 home directory
-│   └── user5/            # User5 home directory
-└── logs/                 # Application logs
+├── data/                  # Persistent user data (separated by container type)
+│   ├── alpine/           # Alpine container data
+│   │   ├── admin/        # Admin home directory (Alpine)
+│   │   ├── user1/        # User1 home directory (Alpine)
+│   │   ├── user2/        # User2 home directory (Alpine)
+│   │   ├── user3/        # User3 home directory (Alpine)
+│   │   ├── user4/        # User4 home directory (Alpine)
+│   │   └── user5/        # User5 home directory (Alpine)
+│   └── ubuntu/           # Ubuntu container data
+│       ├── admin/        # Admin home directory (Ubuntu)
+│       ├── user1/        # User1 home directory (Ubuntu)
+│       ├── user2/        # User2 home directory (Ubuntu)
+│       ├── user3/        # User3 home directory (Ubuntu)
+│       ├── user4/        # User4 home directory (Ubuntu)
+│       └── user5/        # User5 home directory (Ubuntu)
+└── logs/                 # Application logs (separated by container type)
+    ├── alpine/           # Alpine container logs
+    └── ubuntu/           # Ubuntu container logs
 ```
 
 ## 🔄 Development Workflow
@@ -210,6 +221,26 @@ docker-compose -f docker-compose.alpine.yml build
 docker-compose -f docker-compose.ubuntu.yml build && docker-compose -f docker-compose.alpine.yml build
 ```
 
+### Running Both Containers Simultaneously
+
+With separate volumes, you can run both Alpine and Ubuntu containers at the same time:
+
+```bash
+# Start both environments
+docker-compose -f docker-compose.ubuntu.yml up -d
+docker-compose -f docker-compose.alpine.yml up -d
+
+# Access Ubuntu lab (port 2222)
+ssh admin@localhost -p 2222
+
+# Access Alpine lab (port 2223 - you'll need to modify SSH_PORT in .env)
+ssh admin@localhost -p 2223
+
+# Stop both environments
+docker-compose -f docker-compose.ubuntu.yml down
+docker-compose -f docker-compose.alpine.yml down
+```
+
 ## 🛡️ Security Considerations
 
 ### Default Configuration
@@ -244,11 +275,52 @@ Both Ubuntu and Alpine versions include built-in health checks that monitor SSH 
 docker ps
 
 # View detailed health information
-docker inspect student-lab | grep -A 20 "Health"
+docker inspect student-lab-ubuntu | grep -A 20 "Health"
 
 # Monitor health check logs
-docker inspect student-lab | grep -A 10 "Healthcheck"
+docker inspect student-lab-ubuntu | grep -A 10 "Healthcheck"
 ```
+
+## 💾 Volume Management
+
+### Separate Volume Structure
+
+The lab environment uses separate volumes for Alpine and Ubuntu containers to ensure complete isolation and prevent data conflicts:
+
+```
+data/
+├── alpine/           # Alpine container data
+│   ├── admin/        # Admin user data (Alpine)
+│   ├── user1/        # User1 data (Alpine)
+│   ├── user2/        # User2 data (Alpine)
+│   ├── user3/        # User3 data (Alpine)
+│   ├── user4/        # User4 data (Alpine)
+│   └── user5/        # User5 data (Alpine)
+└── ubuntu/           # Ubuntu container data
+    ├── admin/        # Admin user data (Ubuntu)
+    ├── user1/        # User1 data (Ubuntu)
+    ├── user2/        # User2 data (Ubuntu)
+    ├── user3/        # User3 data (Ubuntu)
+    ├── user4/        # User4 data (Ubuntu)
+    └── user5/        # User5 data (Ubuntu)
+
+logs/
+├── alpine/           # Alpine container logs
+└── ubuntu/           # Ubuntu container logs
+```
+
+### Benefits of Separate Volumes
+
+- **🔒 Complete Isolation**: Alpine and Ubuntu containers have completely separate data storage
+- **🚀 Concurrent Operation**: Both container types can run simultaneously without conflicts
+- **📦 Easy Management**: Backup, restore, or manage data for each container type separately
+- **🧹 Clean Organization**: Clear separation makes it obvious which data belongs to which container
+- **🔄 Independent Scaling**: Scale Alpine and Ubuntu environments independently
+
+### Volume Usage
+
+- **Alpine Container**: Stores data in `./data/alpine/` and logs in `./logs/alpine/`
+- **Ubuntu Container**: Stores data in `./data/ubuntu/` and logs in `./logs/ubuntu/`
 
 ## 🏔️ Alpine vs Ubuntu Comparison
 

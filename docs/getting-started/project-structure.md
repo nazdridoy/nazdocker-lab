@@ -23,14 +23,24 @@ nazdocker-lab/
 ├── README.md              # Project documentation
 ├── MANAGEMENT.md          # Legacy comprehensive guide
 ├── LICENSE                # GPL v3 license
-├── data/                  # Persistent user data
-│   ├── admin/            # Admin home directory
-│   ├── user1/            # User1 home directory
-│   ├── user2/            # User2 home directory
-│   ├── user3/            # User3 home directory
-│   ├── user4/            # User4 home directory
-│   └── user5/            # User5 home directory
-├── logs/                 # Application logs
+├── data/                  # Persistent user data (separated by container type)
+│   ├── alpine/           # Alpine container data
+│   │   ├── admin/        # Admin home directory (Alpine)
+│   │   ├── user1/        # User1 home directory (Alpine)
+│   │   ├── user2/        # User2 home directory (Alpine)
+│   │   ├── user3/        # User3 home directory (Alpine)
+│   │   ├── user4/        # User4 home directory (Alpine)
+│   │   └── user5/        # User5 home directory (Alpine)
+│   └── ubuntu/           # Ubuntu container data
+│       ├── admin/        # Admin home directory (Ubuntu)
+│       ├── user1/        # User1 home directory (Ubuntu)
+│       ├── user2/        # User2 home directory (Ubuntu)
+│       ├── user3/        # User3 home directory (Ubuntu)
+│       ├── user4/        # User4 home directory (Ubuntu)
+│       └── user5/        # User5 home directory (Ubuntu)
+├── logs/                 # Application logs (separated by container type)
+│   ├── alpine/           # Alpine container logs
+│   └── ubuntu/           # Ubuntu container logs
 ├── config/               # Configuration files
 │   └── ssh/             # SSH configuration
 └── docs/                # Modular documentation

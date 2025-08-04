@@ -64,6 +64,69 @@ echo "User Accounts:"
 docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine bash -c "cat /etc/passwd | grep -E ':(/bin/bash|/bin/sh)$'"
 ```
 
+### Volume Management Script
+```bash
+#!/bin/bash
+# volume-management.sh
+
+ACTION=$1
+CONTAINER_TYPE=$2
+
+case $ACTION in
+    "backup")
+        if [ "$CONTAINER_TYPE" = "alpine" ]; then
+            tar -czf alpine-backup-$(date +%Y%m%d-%H%M%S).tar.gz data/alpine/
+            echo "Alpine backup created"
+        elif [ "$CONTAINER_TYPE" = "ubuntu" ]; then
+            tar -czf ubuntu-backup-$(date +%Y%m%d-%H%M%S).tar.gz data/ubuntu/
+            echo "Ubuntu backup created"
+        else
+            tar -czf full-backup-$(date +%Y%m%d-%H%M%S).tar.gz data/
+            echo "Full backup created"
+        fi
+        ;;
+    "restore")
+        if [ "$CONTAINER_TYPE" = "alpine" ]; then
+            tar -xzf alpine-backup-*.tar.gz
+            echo "Alpine data restored"
+        elif [ "$CONTAINER_TYPE" = "ubuntu" ]; then
+            tar -xzf ubuntu-backup-*.tar.gz
+            echo "Ubuntu data restored"
+        else
+            tar -xzf full-backup-*.tar.gz
+            echo "Full data restored"
+        fi
+        ;;
+    "clean")
+        if [ "$CONTAINER_TYPE" = "alpine" ]; then
+            rm -rf data/alpine/*
+            echo "Alpine data cleaned"
+        elif [ "$CONTAINER_TYPE" = "ubuntu" ]; then
+            rm -rf data/ubuntu/*
+            echo "Ubuntu data cleaned"
+        else
+            rm -rf data/*
+            echo "All data cleaned"
+        fi
+        ;;
+    "status")
+        echo "=== Volume Status ==="
+        echo "Alpine data size: $(du -sh data/alpine/ 2>/dev/null || echo 'Not found')"
+        echo "Ubuntu data size: $(du -sh data/ubuntu/ 2>/dev/null || echo 'Not found')"
+        echo "Alpine logs size: $(du -sh logs/alpine/ 2>/dev/null || echo 'Not found')"
+        echo "Ubuntu logs size: $(du -sh logs/ubuntu/ 2>/dev/null || echo 'Not found')"
+        ;;
+    *)
+        echo "Usage: $0 {backup|restore|clean|status} [alpine|ubuntu|all]"
+        echo "Examples:"
+        echo "  $0 backup alpine"
+        echo "  $0 restore ubuntu"
+        echo "  $0 clean all"
+        echo "  $0 status"
+        ;;
+esac
+```
+
 ## 👥 User Management Scripts
 
 ### User Management Script
@@ -245,8 +308,8 @@ mkdir -p "$BACKUP_DIR"
 
 echo "Creating Alpine backup in $BACKUP_DIR..."
 
-# Backup user data
-tar -czf "$BACKUP_DIR/user-data.tar.gz" data/
+# Backup Alpine user data only
+tar -czf "$BACKUP_DIR/alpine-data.tar.gz" data/alpine/
 
 # Backup configuration
 cp docker-compose.alpine.yml "$BACKUP_DIR/"
@@ -257,6 +320,63 @@ cp start.sh "$BACKUP_DIR/"
 docker-compose -f docker-compose.alpine.yml ps > "$BACKUP_DIR/container-status.txt"
 
 echo "Alpine backup completed: $BACKUP_DIR"
+```
+
+### Ubuntu Backup Script
+```bash
+#!/bin/bash
+# backup-lab-ubuntu.sh
+
+BACKUP_DIR="backups/$(date +%Y%m%d-%H%M%S)-ubuntu"
+mkdir -p "$BACKUP_DIR"
+
+echo "Creating Ubuntu backup in $BACKUP_DIR..."
+
+# Backup Ubuntu user data only
+tar -czf "$BACKUP_DIR/ubuntu-data.tar.gz" data/ubuntu/
+
+# Backup configuration
+cp docker-compose.ubuntu.yml "$BACKUP_DIR/"
+cp Dockerfile.ubuntu "$BACKUP_DIR/"
+cp start.sh "$BACKUP_DIR/"
+
+# Backup container state
+docker-compose -f docker-compose.ubuntu.yml ps > "$BACKUP_DIR/container-status.txt"
+
+echo "Ubuntu backup completed: $BACKUP_DIR"
+```
+
+### Combined Backup Script
+```bash
+#!/bin/bash
+# backup-lab-combined.sh
+
+BACKUP_DIR="backups/$(date +%Y%m%d-%H%M%S)-combined"
+mkdir -p "$BACKUP_DIR"
+
+echo "Creating combined backup in $BACKUP_DIR..."
+
+# Backup all user data (both Alpine and Ubuntu)
+tar -czf "$BACKUP_DIR/all-data.tar.gz" data/
+
+# Backup Alpine data separately
+tar -czf "$BACKUP_DIR/alpine-data.tar.gz" data/alpine/
+
+# Backup Ubuntu data separately
+tar -czf "$BACKUP_DIR/ubuntu-data.tar.gz" data/ubuntu/
+
+# Backup configuration files
+cp docker-compose.ubuntu.yml "$BACKUP_DIR/"
+cp docker-compose.alpine.yml "$BACKUP_DIR/"
+cp Dockerfile.ubuntu "$BACKUP_DIR/"
+cp Dockerfile.alpine "$BACKUP_DIR/"
+cp start.sh "$BACKUP_DIR/"
+
+# Backup container states
+docker-compose -f docker-compose.ubuntu.yml ps > "$BACKUP_DIR/ubuntu-container-status.txt"
+docker-compose -f docker-compose.alpine.yml ps > "$BACKUP_DIR/alpine-container-status.txt"
+
+echo "Combined backup completed: $BACKUP_DIR"
 ```
 
 ### Automated Backup Script

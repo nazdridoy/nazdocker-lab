@@ -10,6 +10,47 @@ permalink: /administration/container-management/
 
 Complete guide for managing Docker containers in NazDocker Lab.
 
+## 💾 Volume Management
+
+### Separate Volume Structure
+
+The lab environment uses separate volumes for Alpine and Ubuntu containers to ensure complete isolation and prevent data conflicts:
+
+```
+data/
+├── alpine/           # Alpine container data
+│   ├── admin/        # Admin user data (Alpine)
+│   ├── user1/        # User1 data (Alpine)
+│   ├── user2/        # User2 data (Alpine)
+│   ├── user3/        # User3 data (Alpine)
+│   ├── user4/        # User4 data (Alpine)
+│   └── user5/        # User5 data (Alpine)
+└── ubuntu/           # Ubuntu container data
+    ├── admin/        # Admin user data (Ubuntu)
+    ├── user1/        # User1 data (Ubuntu)
+    ├── user2/        # User2 data (Ubuntu)
+    ├── user3/        # User3 data (Ubuntu)
+    ├── user4/        # User4 data (Ubuntu)
+    └── user5/        # User5 data (Ubuntu)
+
+logs/
+├── alpine/           # Alpine container logs
+└── ubuntu/           # Ubuntu container logs
+```
+
+### Benefits of Separate Volumes
+
+- **🔒 Complete Isolation**: Alpine and Ubuntu containers have completely separate data storage
+- **🚀 Concurrent Operation**: Both container types can run simultaneously without conflicts
+- **📦 Easy Management**: Backup, restore, or manage data for each container type separately
+- **🧹 Clean Organization**: Clear separation makes it obvious which data belongs to which container
+- **🔄 Independent Scaling**: Scale Alpine and Ubuntu environments independently
+
+### Volume Usage
+
+- **Alpine Container**: Stores data in `./data/alpine/` and logs in `./logs/alpine/`
+- **Ubuntu Container**: Stores data in `./data/ubuntu/` and logs in `./logs/ubuntu/`
+
 ## 🚀 Essential Commands
 
 ### Ubuntu Version
@@ -157,6 +198,26 @@ docker-compose -f docker-compose.ubuntu.yml build && docker-compose -f docker-co
 
 # Force rebuild (no cache)
 docker-compose -f docker-compose.ubuntu.yml build --no-cache
+```
+
+### Running Both Containers Simultaneously
+
+With separate volumes, you can run both Alpine and Ubuntu containers at the same time:
+
+```bash
+# Start both environments
+docker-compose -f docker-compose.ubuntu.yml up -d
+docker-compose -f docker-compose.alpine.yml up -d
+
+# Access Ubuntu lab (port 2222)
+ssh admin@localhost -p 2222
+
+# Access Alpine lab (port 2223 - you'll need to modify SSH_PORT in .env)
+ssh admin@localhost -p 2223
+
+# Stop both environments
+docker-compose -f docker-compose.ubuntu.yml down
+docker-compose -f docker-compose.alpine.yml down
 ```
 
 ## 🏥 Health Monitoring

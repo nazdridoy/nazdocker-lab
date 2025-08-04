@@ -37,8 +37,11 @@ service ssh status
 
 ### Data Corruption
 ```bash
-# Emergency data backup
-docker cp student-lab-ubuntu:/home ./emergency-data-backup-$(date +%Y%m%d-%H%M%S)
+# Emergency data backup (Ubuntu)
+docker cp student-lab-ubuntu:/home ./emergency-data-backup-ubuntu-$(date +%Y%m%d-%H%M%S)
+
+# Emergency data backup (Alpine)
+docker cp student-lab-alpine:/home ./emergency-data-backup-alpine-$(date +%Y%m%d-%H%M%S)
 
 # Restore from backup if available
 # tar -xzf backup-file.tar.gz
@@ -87,7 +90,8 @@ docker-compose -f docker-compose.ubuntu.yml down -v --remove-orphans --rmi all
 docker system prune -a --volumes
 
 # Recreate data directories
-mkdir -p data/{admin,user1,user2,user3,user4,user5}
+mkdir -p data/{alpine,ubuntu}/{admin,user1,user2,user3,user4,user5}
+mkdir -p logs/{alpine,ubuntu}
 
 # Restart fresh
 docker-compose -f docker-compose.ubuntu.yml up -d --build
@@ -140,7 +144,8 @@ echo "2. Cleaning up Docker..."
 docker system prune -f
 
 echo "3. Recreating data directories..."
-mkdir -p data/{admin,user1,user2,user3,user4,user5}
+mkdir -p data/{alpine,ubuntu}/{admin,user1,user2,user3,user4,user5}
+mkdir -p logs/{alpine,ubuntu}
 
 echo "4. Starting fresh container..."
 docker-compose -f docker-compose.ubuntu.yml up -d --build
@@ -235,7 +240,8 @@ docker system prune -a --volumes
 sudo systemctl restart docker
 
 # 4. Recreate environment
-mkdir -p data/{admin,user1,user2,user3,user4,user5}
+mkdir -p data/{alpine,ubuntu}/{admin,user1,user2,user3,user4,user5}
+mkdir -p logs/{alpine,ubuntu}
 docker-compose -f docker-compose.ubuntu.yml up -d --build
 ```
 

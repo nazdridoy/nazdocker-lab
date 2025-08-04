@@ -83,15 +83,21 @@ docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu cat /etc
 
 #### Backup Verification
 ```bash
-# Test backup restoration
-# Create test backup
-tar -czf test-backup-$(date +%Y%m%d).tar.gz data/
+# Test backup restoration for Ubuntu
+tar -czf ubuntu-test-backup-$(date +%Y%m%d).tar.gz data/ubuntu/
+
+# Test backup restoration for Alpine
+tar -czf alpine-test-backup-$(date +%Y%m%d).tar.gz data/alpine/
+
+# Test backup restoration for both
+tar -czf full-test-backup-$(date +%Y%m%d).tar.gz data/
 
 # Verify backup integrity
-tar -tzf test-backup-$(date +%Y%m%d).tar.gz > /dev/null && echo "Backup is valid" || echo "Backup is corrupted"
+tar -tzf ubuntu-test-backup-$(date +%Y%m%d).tar.gz > /dev/null && echo "Ubuntu backup is valid" || echo "Ubuntu backup is corrupted"
+tar -tzf alpine-test-backup-$(date +%Y%m%d).tar.gz > /dev/null && echo "Alpine backup is valid" || echo "Alpine backup is corrupted"
 
-# Clean up test backup
-rm test-backup-$(date +%Y%m%d).tar.gz
+# Clean up test backups
+rm ubuntu-test-backup-$(date +%Y%m%d).tar.gz alpine-test-backup-$(date +%Y%m%d).tar.gz full-test-backup-$(date +%Y%m%d).tar.gz
 ```
 
 ### Quarterly Tasks
@@ -161,11 +167,15 @@ service ssh restart
 
 ### Emergency Backup
 ```bash
-# Quick backup before emergency procedures
-docker cp student-lab-ubuntu:/home ./emergency-backup-$(date +%Y%m%d-%H%M%S)
+# Quick backup before emergency procedures (Ubuntu)
+docker cp student-lab-ubuntu:/home ./emergency-backup-ubuntu-$(date +%Y%m%d-%H%M%S)
+
+# Quick backup before emergency procedures (Alpine)
+docker cp student-lab-alpine:/home ./emergency-backup-alpine-$(date +%Y%m%d-%H%M%S)
 
 # Backup configuration
-cp docker-compose.ubuntu.yml ./emergency-backup-$(date +%Y%m%d-%H%M%S)-config.yml
+cp docker-compose.ubuntu.yml ./emergency-backup-$(date +%Y%m%d-%H%M%S)-ubuntu-config.yml
+cp docker-compose.alpine.yml ./emergency-backup-$(date +%Y%m%d-%H%M%S)-alpine-config.yml
 
 # Backup environment variables
 cp .env ./emergency-backup-$(date +%Y%m%d-%H%M%S)-env
