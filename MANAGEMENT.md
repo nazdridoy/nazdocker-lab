@@ -193,7 +193,7 @@ docker-compose config > resolved-config.yml
 #### Method 1: Container Shell
 ```bash
 # Access container
-docker-compose exec lab-environment bash
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash
 
 # Add new user
 useradd -m -s /bin/bash newuser
@@ -213,12 +213,12 @@ chown -R newuser:newuser /home/newuser
 USER_PASSWORD=newpassword123
 
 # Restart container
-docker-compose down && docker-compose up -d
+docker-compose -f docker-compose.ubuntu.yml down && docker-compose -f docker-compose.ubuntu.yml up -d
 ```
 
 #### Method 3: Dockerfile Modification
 ```dockerfile
-# Add to Dockerfile
+# Add to Dockerfile.ubuntu
 RUN useradd -m -s /bin/bash newuser && \
     echo "newuser:password123" | chpasswd && \
     usermod -aG sudo newuser
@@ -228,7 +228,7 @@ RUN useradd -m -s /bin/bash newuser && \
 
 ```bash
 # Access container
-docker-compose exec lab-environment bash
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash
 
 # Remove user and home directory
 userdel -r username
@@ -241,17 +241,17 @@ gpasswd -d username sudo
 
 ```bash
 # List all users with shell access
-docker-compose exec lab-environment bash -c "
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
 cat /etc/passwd | grep -E ':(/bin/bash|/bin/sh)$'
 "
 
 # List users with sudo access
-docker-compose exec lab-environment bash -c "
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
 getent group sudo
 "
 
 # List all users
-docker-compose exec lab-environment bash -c "
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
 cut -d: -f1 /etc/passwd | sort
 "
 ```
@@ -261,7 +261,7 @@ cut -d: -f1 /etc/passwd | sort
 #### Method 1: Interactive (Recommended)
 ```bash
 # Access container
-docker-compose exec lab-environment bash
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash
 
 # Change passwords interactively
 passwd admin
@@ -278,13 +278,13 @@ USER_PASSWORD=newuserpass
 ROOT_PASSWORD=newrootpass
 
 # Restart container
-docker-compose down && docker-compose up -d
+docker-compose -f docker-compose.ubuntu.yml down && docker-compose -f docker-compose.ubuntu.yml up -d
 ```
 
 #### Method 3: Command Line
 ```bash
 # Access container
-docker-compose exec lab-environment bash
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash
 
 # Change passwords non-interactively
 echo "admin:newpassword" | chpasswd
@@ -298,7 +298,7 @@ echo "user1:newpassword" | chpasswd
 
 #### Method 1: Mount SSH Keys
 ```yaml
-# In docker-compose.yml
+# In docker-compose.ubuntu.yml
 volumes:
   - ~/.ssh/id_rsa.pub:/home/admin/.ssh/authorized_keys:ro
   - ~/.ssh/id_rsa.pub:/home/user1/.ssh/authorized_keys:ro
@@ -307,7 +307,7 @@ volumes:
 #### Method 2: Container Shell
 ```bash
 # Access container
-docker-compose exec lab-environment bash
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash
 
 # Add SSH key for admin
 mkdir -p /home/admin/.ssh
@@ -331,7 +331,7 @@ RUN mkdir -p /home/admin/.ssh && \
 
 ```bash
 # Access container
-docker-compose exec lab-environment bash
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash
 
 # Install and configure firewall
 apt-get update
@@ -350,17 +350,17 @@ ufw status
 
 ```bash
 # Check for failed login attempts
-docker-compose exec lab-environment bash -c "
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
 grep 'Failed password' /var/log/auth.log
 "
 
 # Check SSH configuration
-docker-compose exec lab-environment bash -c "
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
 cat /etc/ssh/sshd_config | grep -E '(PasswordAuthentication|PermitRootLogin|PubkeyAuthentication)'
 "
 
 # Check user permissions
-docker-compose exec lab-environment bash -c "
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
 ls -la /home/
 "
 ```
@@ -372,13 +372,13 @@ ls -la /home/
 #### Checking Tunnel Status
 ```bash
 # View tunnel logs
-docker-compose logs lab-environment | grep -i "playit\|tunnel\|url"
+docker-compose -f docker-compose.ubuntu.yml logs lab-environment-ubuntu | grep -i "playit\|tunnel\|url"
 
 # Follow logs in real-time
-docker-compose logs -f lab-environment
+docker-compose -f docker-compose.ubuntu.yml logs -f lab-environment-ubuntu
 
 # Check playit.gg process
-docker-compose exec lab-environment ps aux | grep playit
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu ps aux | grep playit
 ```
 
 #### Updating Playit.gg Secret Key
@@ -392,24 +392,24 @@ nano .env
 PLAYIT_SECRET_KEY=your_new_secret_key_here
 
 # Restart container
-docker-compose down && docker-compose up -d
+docker-compose -f docker-compose.ubuntu.yml down && docker-compose -f docker-compose.ubuntu.yml up -d
 ```
 
 **Method 2: Environment Variable**
 ```bash
 # Stop container
-docker-compose down
+docker-compose -f docker-compose.ubuntu.yml down
 
 # Set environment variable
 export PLAYIT_SECRET_KEY=your_new_secret_key_here
 
 # Start with new key
-docker-compose up -d
+docker-compose -f docker-compose.ubuntu.yml up -d
 ```
 
 **Method 3: Dockerfile**
 ```dockerfile
-# In Dockerfile
+# In Dockerfile.ubuntu
 ENV PLAYIT_SECRET_KEY=your_secret_key_here
 ```
 
@@ -417,29 +417,29 @@ ENV PLAYIT_SECRET_KEY=your_secret_key_here
 
 ```bash
 # Check if secret key is loaded
-docker-compose exec lab-environment env | grep PLAYIT
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu env | grep PLAYIT
 
 # Restart playit.gg service
-docker-compose exec lab-environment pkill playit-agent
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu pkill playit-agent
 
 # Check tunnel connectivity
-docker-compose exec lab-environment ping google.com
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu ping google.com
 ```
 
 ### SSH Service Management
 
 ```bash
 # Check SSH service status
-docker-compose exec lab-environment service ssh status
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu service ssh status
 
 # Restart SSH service
-docker-compose exec lab-environment service ssh restart
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu service ssh restart
 
 # Check SSH configuration
-docker-compose exec lab-environment cat /etc/ssh/sshd_config
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu cat /etc/ssh/sshd_config
 
 # Test SSH locally
-docker-compose exec lab-environment ssh localhost
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu ssh localhost
 ```
 
 ## 💾 Backup and Recovery
@@ -461,10 +461,10 @@ tar -czf lab-backup-$(date +%Y%m%d).tar.gz data/ --exclude='*.tmp' --exclude='*.
 #### Configuration Backup
 ```bash
 # Backup Docker configuration
-docker-compose config > docker-compose-backup-$(date +%Y%m%d).yml
+docker-compose -f docker-compose.ubuntu.yml config > docker-compose-backup-$(date +%Y%m%d).yml
 
 # Backup Dockerfile
-cp Dockerfile Dockerfile.backup-$(date +%Y%m%d)
+cp Dockerfile.ubuntu Dockerfile.ubuntu.backup-$(date +%Y%m%d)
 
 # Backup environment variables (without sensitive data)
 cp .env.example .env.example.backup-$(date +%Y%m%d)
@@ -482,8 +482,8 @@ echo "Creating backup in $BACKUP_DIR..."
 tar -czf "$BACKUP_DIR/user-data.tar.gz" data/
 
 # Backup configuration
-cp docker-compose.yml "$BACKUP_DIR/"
-cp Dockerfile "$BACKUP_DIR/"
+cp docker-compose.ubuntu.yml "$BACKUP_DIR/"
+cp Dockerfile.ubuntu "$BACKUP_DIR/"
 cp .env.example "$BACKUP_DIR/"
 
 # Backup container state
@@ -509,13 +509,13 @@ ls -la data/
 #### Restore Configuration
 ```bash
 # Restore Docker Compose configuration
-cp docker-compose-backup-20231201.yml docker-compose.yml
+cp docker-compose-backup-20231201.yml docker-compose.ubuntu.yml
 
 # Restore Dockerfile
-cp Dockerfile.backup-20231201 Dockerfile
+cp Dockerfile.ubuntu.backup-20231201 Dockerfile.ubuntu
 
 # Rebuild container
-docker-compose up -d --build
+docker-compose -f docker-compose.ubuntu.yml up -d --build
 ```
 
 ### Automated Backup Script
@@ -530,17 +530,17 @@ mkdir -p "$BACKUP_DIR"
 echo "Starting backup at $(date)..."
 
 # Stop container to ensure data consistency
-docker-compose stop
+docker-compose -f docker-compose.ubuntu.yml stop
 
 # Backup user data
 tar -czf "$BACKUP_DIR/user-data.tar.gz" data/
 
 # Backup configuration
-cp docker-compose.yml "$BACKUP_DIR/"
-cp Dockerfile "$BACKUP_DIR/"
+cp docker-compose.ubuntu.yml "$BACKUP_DIR/"
+cp Dockerfile.ubuntu "$BACKUP_DIR/"
 
 # Start container
-docker-compose start
+docker-compose -f docker-compose.ubuntu.yml start
 
 echo "Backup completed: $BACKUP_DIR"
 ```
@@ -554,22 +554,22 @@ echo "Backup completed: $BACKUP_DIR"
 ##### Ubuntu Version
 ```bash
 # Check container status
-docker-compose ps
+docker-compose -f docker-compose.ubuntu.yml ps
 
 # Check resource usage
-docker stats lab-environment
+docker stats student-lab-ubuntu
 
 # Check container logs
-docker-compose logs lab-environment
+docker-compose -f docker-compose.ubuntu.yml logs lab-environment-ubuntu
 
 # Check container health
-docker-compose exec lab-environment systemctl status ssh
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu systemctl status ssh
 
 # Monitor health check status
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
 
 # View health check configuration
-docker inspect student-lab | grep -A 10 "Healthcheck"
+docker inspect student-lab-ubuntu | grep -A 10 "Healthcheck"
 ```
 
 ##### Alpine Version
@@ -581,10 +581,10 @@ docker-compose -f docker-compose.alpine.yml ps
 docker stats student-lab-alpine
 
 # Check container logs
-docker-compose -f docker-compose.alpine.yml logs lab-environment
+docker-compose -f docker-compose.alpine.yml logs lab-environment-alpine
 
 # Check container health
-docker-compose -f docker-compose.alpine.yml exec lab-environment pgrep sshd
+docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine pgrep sshd
 
 # Monitor health check status
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
@@ -599,10 +599,10 @@ docker inspect student-lab-alpine | grep -A 10 "Healthcheck"
 docker stats --format "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}"
 
 # Check disk usage
-docker-compose exec lab-environment df -h
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu df -h
 
 # Check memory usage
-docker-compose exec lab-environment free -h
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu free -h
 ```
 
 ### Troubleshooting Common Issues
@@ -616,10 +616,10 @@ ls -la .env
 cat .env | grep -v "^#" | grep -v "^$"
 
 # Check if variables are loaded
-docker-compose config | grep -E "(PLAYIT_SECRET_KEY|ADMIN_PASSWORD|USER_PASSWORD|ROOT_PASSWORD)"
+docker-compose -f docker-compose.ubuntu.yml config | grep -E "(PLAYIT_SECRET_KEY|ADMIN_PASSWORD|USER_PASSWORD|ROOT_PASSWORD)"
 
 # Test environment variable loading
-docker-compose config --quiet
+docker-compose -f docker-compose.ubuntu.yml config --quiet
 
 # Recreate .env file if corrupted
 cp .env.example .env
@@ -628,7 +628,7 @@ cp .env.example .env
 #### Container Won't Start
 ```bash
 # Check logs
-docker-compose logs
+docker-compose -f docker-compose.ubuntu.yml logs
 
 # Check disk space
 df -h
@@ -643,34 +643,34 @@ docker-compose --version
 #### SSH Connection Issues
 ```bash
 # Check if container is running
-docker-compose ps
+docker-compose -f docker-compose.ubuntu.yml ps
 
 # Check SSH service
-docker-compose exec lab-environment service ssh status
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu service ssh status
 
 # Check port mapping
-docker port lab-environment
+docker port student-lab-ubuntu
 
 # Test SSH locally
-docker-compose exec lab-environment ssh localhost
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu ssh localhost
 
 # Check health status
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
 
 # View health check logs
-docker inspect student-lab | grep -A 20 "Health"
+docker inspect student-lab-ubuntu | grep -A 20 "Health"
 ```
 
 #### Network Connectivity Issues
 ```bash
 # Test network connectivity
-docker-compose exec lab-environment ping google.com
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu ping google.com
 
 # Check network interfaces
-docker-compose exec lab-environment ifconfig
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu ifconfig
 
 # Check DNS resolution
-docker-compose exec lab-environment nslookup google.com
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu nslookup google.com
 ```
 
 ### Health Monitoring
@@ -695,22 +695,22 @@ docker inspect student-lab | grep -A 20 "Health"
 docker inspect student-lab | grep -A 10 "Healthcheck"
 
 # Test health check manually
-docker-compose exec lab-environment service ssh status
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu service ssh status
 ```
 
 #### Health Check Troubleshooting
 ```bash
 # If container shows as unhealthy
-docker-compose exec lab-environment service ssh status
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu service ssh status
 
 # Restart SSH service if needed
-docker-compose exec lab-environment service ssh restart
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu service ssh restart
 
 # Check SSH configuration
-docker-compose exec lab-environment cat /etc/ssh/sshd_config
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu cat /etc/ssh/sshd_config
 
 # View health check logs
-docker inspect student-lab | grep -A 20 "Health"
+docker inspect student-lab-ubuntu | grep -A 20 "Health"
 ```
 
 ### Log Analysis
@@ -718,22 +718,22 @@ docker inspect student-lab | grep -A 20 "Health"
 #### SSH Logs
 ```bash
 # View SSH access logs
-docker-compose exec lab-environment tail -f /var/log/auth.log
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu tail -f /var/log/auth.log
 
 # Check failed login attempts
-docker-compose exec lab-environment grep "Failed password" /var/log/auth.log
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu grep "Failed password" /var/log/auth.log
 
 # Check successful logins
-docker-compose exec lab-environment grep "Accepted password" /var/log/auth.log
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu grep "Accepted password" /var/log/auth.log
 ```
 
 #### System Logs
 ```bash
 # View system logs
-docker-compose exec lab-environment journalctl -f
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu journalctl -f
 
 # Check service status
-docker-compose exec lab-environment systemctl status --all
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu systemctl status --all
 ```
 
 ## ⚙️ Advanced Configuration
@@ -752,10 +752,10 @@ The lab environment uses a modularized startup script (`start.sh`) that handles:
 nano start.sh
 
 # Rebuild container after changes
-docker-compose up -d --build
+docker-compose -f docker-compose.ubuntu.yml up -d --build
 
 # View startup script logs
-docker-compose logs lab-environment | grep -i "start\|ssh\|playit"
+docker-compose -f docker-compose.ubuntu.yml logs lab-environment-ubuntu | grep -i "start\|ssh\|playit"
 ```
 
 #### Startup Script Functions
@@ -770,12 +770,12 @@ docker-compose logs lab-environment | grep -i "start\|ssh\|playit"
 #### Adding Additional Packages
 ```bash
 # Method 1: Running container
-docker-compose exec lab-environment bash
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash
 apt-get update
 apt-get install -y package_name
 
 # Method 2: Dockerfile modification
-# Add to Dockerfile
+# Add to Dockerfile.ubuntu
 RUN apt-get update && apt-get install -y \
     package1 \
     package2 \
@@ -792,17 +792,17 @@ apt-get install -y htop vim nano
 EOF
 
 # Copy to container and execute
-docker cp install-tools.sh lab-environment:/tmp/
-docker-compose exec lab-environment bash /tmp/install-tools.sh
+docker cp install-tools.sh student-lab-ubuntu:/tmp/
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash /tmp/install-tools.sh
 ```
 
 ### Performance Optimization
 
 #### Resource Limits
 ```yaml
-# In docker-compose.yml
+# In docker-compose.ubuntu.yml
 services:
-  lab-environment:
+  lab-environment-ubuntu:
     deploy:
       resources:
         limits:
@@ -821,7 +821,7 @@ services:
 
 #### Volume Optimization
 ```yaml
-# In docker-compose.yml
+# In docker-compose.ubuntu.yml
 volumes:
   - ./data:/home:delegated
   - ./logs:/var/log:delegated
@@ -831,7 +831,7 @@ volumes:
 
 #### Custom Network
 ```yaml
-# In docker-compose.yml
+# In docker-compose.ubuntu.yml
 networks:
   lab-network:
     driver: bridge
@@ -840,7 +840,7 @@ networks:
         - subnet: 172.20.0.0/16
 
 services:
-  lab-environment:
+  lab-environment-ubuntu:
     networks:
       - lab-network
 ```
@@ -852,34 +852,34 @@ services:
 #### Weekly Tasks
 ```bash
 # Update package lists
-docker-compose exec lab-environment apt-get update
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu apt-get update
 
 # Check for security updates
-docker-compose exec lab-environment apt-get upgrade --dry-run
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu apt-get upgrade --dry-run
 
 # Clean up old packages
-docker-compose exec lab-environment apt-get autoremove -y
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu apt-get autoremove -y
 ```
 
 #### Monthly Tasks
 ```bash
 # Full system update
-docker-compose exec lab-environment apt-get update && apt-get upgrade -y
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu apt-get update && apt-get upgrade -y
 
 # Rebuild container with updated base image
-docker-compose up -d --build
+docker-compose -f docker-compose.ubuntu.yml up -d --build
 
 # Review and rotate logs
-docker-compose exec lab-environment find /var/log -name "*.log" -mtime +30 -delete
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu find /var/log -name "*.log" -mtime +30 -delete
 ```
 
 #### Quarterly Tasks
 ```bash
 # Security audit
-docker-compose exec lab-environment apt-get audit
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu apt-get audit
 
 # Review user accounts
-docker-compose exec lab-environment cat /etc/passwd | grep -E ":(/bin/bash|/bin/sh)$"
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu cat /etc/passwd | grep -E ":(/bin/bash|/bin/sh)$"
 
 # Update SSH keys
 # Review and update authorized_keys files
@@ -890,19 +890,19 @@ docker-compose exec lab-environment cat /etc/passwd | grep -E ":(/bin/bash|/bin/
 #### Container Reset
 ```bash
 # Stop and remove container
-docker-compose down
+docker-compose -f docker-compose.ubuntu.yml down
 
 # Remove volumes (WARNING: Deletes all data)
-docker-compose down -v
+docker-compose -f docker-compose.ubuntu.yml down -v
 
 # Rebuild and start
-docker-compose up -d --build
+docker-compose -f docker-compose.ubuntu.yml up -d --build
 ```
 
 #### Emergency Access
 ```bash
 # Access container when SSH is down
-docker-compose exec lab-environment bash
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash
 
 # Check SSH service
 service ssh status
@@ -914,10 +914,10 @@ service ssh restart
 #### Emergency Backup
 ```bash
 # Quick backup before emergency procedures
-docker cp lab-environment:/home ./emergency-backup-$(date +%Y%m%d-%H%M%S)
+docker cp student-lab-ubuntu:/home ./emergency-backup-$(date +%Y%m%d-%H%M%S)
 
 # Backup configuration
-cp docker-compose.yml ./emergency-backup-$(date +%Y%m%d-%H%M%S)-config.yml
+cp docker-compose.ubuntu.yml ./emergency-backup-$(date +%Y%m%d-%H%M%S)-config.yml
 ```
 
 ### Cleanup Procedures
@@ -925,7 +925,7 @@ cp docker-compose.yml ./emergency-backup-$(date +%Y%m%d-%H%M%S)-config.yml
 #### Complete Cleanup
 ```bash
 # Stop and remove everything
-docker-compose down -v --remove-orphans --rmi all
+docker-compose -f docker-compose.ubuntu.yml down -v --remove-orphans --rmi all
 
 # Remove all unused Docker resources
 docker system prune -a --volumes
@@ -940,7 +940,7 @@ docker images
 #### Selective Cleanup
 ```bash
 # Remove specific resources
-docker rm -f lab-environment
+docker rm -f student-lab-ubuntu
 docker network rm nazdocker-lab_lab-network
 docker volume rm nazdocker-lab_user-data
 ```
@@ -954,7 +954,7 @@ docker volume rm nazdocker-lab_user-data
 
 echo "=== NazDocker Lab Status ==="
 echo "Container Status:"
-docker-compose ps
+docker-compose -f docker-compose.ubuntu.yml ps
 echo ""
 
 echo "Health Status:"
@@ -962,15 +962,15 @@ docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
 echo ""
 
 echo "Recent Logs:"
-docker-compose logs --tail=20 lab-environment
+docker-compose -f docker-compose.ubuntu.yml logs --tail=20 lab-environment-ubuntu
 echo ""
 
 echo "Resource Usage:"
-docker stats --no-stream lab-environment
+docker stats --no-stream student-lab-ubuntu
 echo ""
 
 echo "User Accounts:"
-docker-compose exec lab-environment bash -c "cat /etc/passwd | grep -E ':(/bin/bash|/bin/sh)$'"
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "cat /etc/passwd | grep -E ':(/bin/bash|/bin/sh)$'"
 ```
 
 ### Alpine Status Check Script
@@ -996,7 +996,7 @@ docker stats --no-stream student-lab-alpine
 echo ""
 
 echo "User Accounts:"
-docker-compose -f docker-compose.alpine.yml exec lab-environment bash -c "cat /etc/passwd | grep -E ':(/bin/bash|/bin/sh)$'"
+docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine bash -c "cat /etc/passwd | grep -E ':(/bin/bash|/bin/sh)$'"
 ```
 
 ### User Management Script
@@ -1009,20 +1009,20 @@ USERNAME=$2
 
 case $ACTION in
     "add")
-        docker-compose exec lab-environment bash -c "
+        docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
             useradd -m -s /bin/bash $USERNAME
             echo '$USERNAME:password123' | chpasswd
             echo 'User $USERNAME created with password: password123'
         "
         ;;
     "remove")
-        docker-compose exec lab-environment bash -c "
+        docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
             userdel -r $USERNAME
             echo 'User $USERNAME removed'
         "
         ;;
     "list")
-        docker-compose exec lab-environment bash -c "
+        docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu bash -c "
             cat /etc/passwd | grep -E ':(/bin/bash|/bin/sh)$'
         "
         ;;
@@ -1045,15 +1045,15 @@ docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
 echo ""
 
 echo "Detailed Health Information:"
-docker inspect student-lab | grep -A 20 "Health"
+docker inspect student-lab-ubuntu | grep -A 20 "Health"
 echo ""
 
 echo "SSH Service Status:"
-docker-compose exec lab-environment service ssh status
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu service ssh status
 echo ""
 
 echo "Recent Health Check Logs:"
-docker inspect student-lab | grep -A 10 "Healthcheck"
+docker inspect student-lab-ubuntu | grep -A 10 "Healthcheck"
 ```
 
 ### Backup Script
@@ -1070,12 +1070,12 @@ echo "Creating backup in $BACKUP_DIR..."
 tar -czf "$BACKUP_DIR/user-data.tar.gz" data/
 
 # Backup configuration
-cp docker-compose.yml "$BACKUP_DIR/"
-cp Dockerfile "$BACKUP_DIR/"
+cp docker-compose.ubuntu.yml "$BACKUP_DIR/"
+cp Dockerfile.ubuntu "$BACKUP_DIR/"
 cp start.sh "$BACKUP_DIR/"
 
 # Backup container state
-docker-compose ps > "$BACKUP_DIR/container-status.txt"
+docker-compose -f docker-compose.ubuntu.yml ps > "$BACKUP_DIR/container-status.txt"
 
 echo "Backup completed: $BACKUP_DIR"
 ```
@@ -1129,10 +1129,10 @@ nazdocker-lab/
 
 ### Key Files Explained
 
-- **`Dockerfile`**: Ubuntu container definition with health checks and user setup
-- **`Dockerfile.alpine`**: Alpine container definition (82% smaller, 173MB)
+- **`Dockerfile.ubuntu`**: Ubuntu container definition with health checks and user setup
+- **`Dockerfile.alpine`**: Alpine container definition (82% smaller, 189MB)
 - **`start.sh`**: Cross-platform startup script for runtime configuration
-- **`docker-compose.yml`**: Ubuntu orchestration and volume management
+- **`docker-compose.ubuntu.yml`**: Ubuntu orchestration and volume management
 - **`docker-compose.alpine.yml`**: Alpine orchestration and volume management
 - **`.env.example`**: Template for environment variable configuration
 - **`data/`**: Persistent storage for user home directories

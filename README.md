@@ -121,7 +121,7 @@ The environment includes playit.gg tunneling for public SSH access:
 
 ```bash
 # Check tunnel status
-docker-compose logs lab-environment | grep -i "playit\|tunnel"
+docker-compose -f docker-compose.ubuntu.yml logs lab-environment-ubuntu | grep -i "playit\|tunnel"
 
 # Connect via public URL (example)
 ssh admin@your-tunnel-url.playit.gg -p 12345
@@ -333,7 +333,7 @@ docker-compose config
 docker-compose ps
 
 # Check SSH service
-docker-compose exec lab-environment service ssh status
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu service ssh status
 ```
 
 **Environment variables not loading:**
