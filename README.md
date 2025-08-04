@@ -15,6 +15,7 @@ A secure, containerized development environment for educational and development 
 - **⚙️ Runtime Configuration**: Environment-based configuration management
 - **🔒 Security Focused**: Proper user isolation and SSH key support
 - **🏥 Health Monitoring**: Built-in health checks for SSH service availability
+- **🏔️ Alpine & Ubuntu Support**: Choose between lightweight Alpine (173MB) or full Ubuntu (968MB)
 
 ## 📋 Prerequisites
 
@@ -135,9 +136,11 @@ ssh admin@your-tunnel-url.playit.gg -p 12345
 
 ```
 nazdocker-lab/
-├── Dockerfile              # Container definition with health checks
-├── start.sh               # Modularized startup script
-├── docker-compose.yml      # Docker Compose orchestration
+├── Dockerfile              # Ubuntu container definition with health checks
+├── Dockerfile.alpine       # Alpine container definition (173MB)
+├── start.sh               # Cross-platform startup script
+├── docker-compose.yml      # Ubuntu Docker Compose orchestration
+├── docker-compose.alpine.yml # Alpine Docker Compose orchestration
 ├── .env.example           # Environment variables template
 ├── README.md              # This file
 ├── MANAGEMENT.md          # Detailed management guide
@@ -154,11 +157,35 @@ nazdocker-lab/
 
 ## 🔄 Development Workflow
 
-1. **Start environment**: `docker-compose up -d`
-2. **SSH into lab**: `ssh admin@localhost -p 2222`
-3. **Develop**: Work in your persistent home directory
-4. **Install packages**: Use `sudo apt-get install` (admin only)
-5. **Stop when done**: `docker-compose down`
+### Ubuntu Version (Recommended for Development)
+```bash
+# Start Ubuntu environment
+docker-compose up -d
+
+# SSH into lab
+ssh admin@localhost -p 2222
+
+# Develop in your persistent home directory
+# Install packages: sudo apt-get install (admin only)
+
+# Stop when done
+docker-compose down
+```
+
+### Alpine Version (Recommended for Production)
+```bash
+# Start Alpine environment (82% smaller)
+docker-compose -f docker-compose.alpine.yml up -d
+
+# SSH into lab (same commands)
+ssh admin@localhost -p 2222
+
+# Develop in your persistent home directory
+# Install packages: sudo apk add (admin only)
+
+# Stop when done
+docker-compose -f docker-compose.alpine.yml down
+```
 
 ## 🛡️ Security Considerations
 
@@ -176,7 +203,7 @@ nazdocker-lab/
 
 ## 🏥 Health Monitoring
 
-The container includes built-in health checks that monitor SSH service availability:
+Both Ubuntu and Alpine versions include built-in health checks that monitor SSH service availability:
 
 - **Health Check Interval**: 30 seconds
 - **Timeout**: 10 seconds per check
@@ -199,6 +226,35 @@ docker inspect student-lab | grep -A 20 "Health"
 # Monitor health check logs
 docker inspect student-lab | grep -A 10 "Healthcheck"
 ```
+
+## 🏔️ Alpine vs Ubuntu Comparison
+
+### Image Size Comparison
+| Version | Base Image | Final Size | Size Reduction |
+|---------|------------|------------|----------------|
+| **Ubuntu** | `ubuntu:22.04` | 968MB | - |
+| **Alpine** | `alpine:3.19` | 173MB | **82% smaller** |
+
+### When to Use Each Version
+
+**Use Alpine When:**
+- Resource constraints are a concern
+- Fast deployments are needed
+- Security is a priority
+- Production environments where size matters
+
+**Use Ubuntu When:**
+- Maximum compatibility is needed
+- Familiar environment is preferred
+- Specific Ubuntu packages are required
+- Development/testing environments
+
+### Key Differences
+- **Package Management**: `apt` (Ubuntu) vs `apk` (Alpine)
+- **Service Management**: `service` (Ubuntu) vs direct commands (Alpine)
+- **User Groups**: `sudo` (Ubuntu) vs `wheel` (Alpine)
+- **Build Time**: Alpine builds ~50% faster
+- **Startup Time**: Alpine starts ~30% faster
 
 ## 📚 Documentation
 

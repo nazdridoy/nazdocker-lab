@@ -39,7 +39,13 @@ else
 fi
 
 # Start SSH server
-service ssh start
+if command -v service >/dev/null 2>&1; then
+    # Ubuntu/Debian style
+    service ssh start
+else
+    # Alpine style
+    /usr/sbin/sshd
+fi
 
 # Start playit.gg agent
 if [ -n "$PLAYIT_SECRET_KEY" ]; then
