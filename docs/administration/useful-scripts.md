@@ -10,6 +10,84 @@ permalink: /administration/useful-scripts/
 
 Complete collection of useful scripts for managing NazDocker Lab.
 
+## 🔑 SSH Key Management Scripts
+
+### SSH Key Management Script
+```bash
+#!/bin/bash
+# ssh-key-management.sh
+
+ACTION=$1
+
+case $ACTION in
+    "generate")
+        echo "Generating SSH host keys..."
+        ./scripts/manage-ssh-keys.sh generate
+        ;;
+    "check")
+        echo "Checking SSH key fingerprints..."
+        ./scripts/manage-ssh-keys.sh check
+        ;;
+    "backup")
+        echo "Creating SSH key backup..."
+        ./scripts/manage-ssh-keys.sh backup
+        ;;
+    "restore")
+        BACKUP_DIR=$2
+        if [ -z "$BACKUP_DIR" ]; then
+            echo "Usage: $0 restore <backup_directory>"
+            exit 1
+        fi
+        echo "Restoring SSH keys from $BACKUP_DIR..."
+        ./scripts/manage-ssh-keys.sh restore "$BACKUP_DIR"
+        ;;
+    *)
+        echo "Usage: $0 {generate|check|backup|restore} [backup_directory]"
+        echo "Examples:"
+        echo "  $0 generate"
+        echo "  $0 check"
+        echo "  $0 backup"
+        echo "  $0 restore backup/ssh-20231201-143022"
+        ;;
+esac
+```
+
+### SSH Key Status Script
+```bash
+#!/bin/bash
+# ssh-key-status.sh
+
+echo "=== SSH Key Status ==="
+echo ""
+
+echo "SSH Key Files:"
+ls -la config/ssh/ssh_host_* 2>/dev/null || echo "No SSH keys found"
+echo ""
+
+echo "SSH Key Fingerprints:"
+if [ -f "config/ssh/ssh_host_rsa_key" ]; then
+    echo "RSA:"
+    ssh-keygen -lf config/ssh/ssh_host_rsa_key
+fi
+if [ -f "config/ssh/ssh_host_ecdsa_key" ]; then
+    echo "ECDSA:"
+    ssh-keygen -lf config/ssh/ssh_host_ecdsa_key
+fi
+if [ -f "config/ssh/ssh_host_ed25519_key" ]; then
+    echo "ED25519:"
+    ssh-keygen -lf config/ssh/ssh_host_ed25519_key
+fi
+echo ""
+
+echo "SSH Key Permissions:"
+ls -la config/ssh/ssh_host_* 2>/dev/null | awk '{print $1, $9}'
+echo ""
+
+echo "Container SSH Key Status:"
+docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu ls -la /etc/ssh/ssh_host_* 2>/dev/null || echo "Container not running"
+echo ""
+```
+
 ## 📊 Status Check Scripts
 
 ### Ubuntu Status Check Script
@@ -715,6 +793,7 @@ done
 
 - **[Container Management](container-management.md)** - Basic container operations
 - **[Health Monitoring](health-monitoring.md)** - System health monitoring
+- **[SSH Key Synchronization](ssh-key-sync.md)** - SSH key management
 - **[Backup and Recovery](backup-recovery.md)** - Data backup and restoration
 - **[Emergency Procedures](../troubleshooting/emergency.md)** - Emergency recovery procedures
 - **[Diagnostic Commands](../troubleshooting/diagnostics.md)** - Troubleshooting tools

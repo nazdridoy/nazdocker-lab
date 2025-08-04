@@ -16,6 +16,7 @@ A secure, containerized development environment for educational and development 
 - **💾 Persistent Storage**: User data persists across container restarts with separate volumes for Alpine and Ubuntu
 - **⚙️ Runtime Configuration**: Environment-based configuration management
 - **🔒 Security Focused**: Proper user isolation and SSH key support
+- **🔑 SSH Key Synchronization**: Shared SSH host keys between Alpine and Ubuntu containers
 - **🏥 Health Monitoring**: Built-in health checks for SSH service availability
 - **🏔️ Alpine & Ubuntu Support**: Choose between lightweight Alpine (173MB) or full Ubuntu (968MB)
 
@@ -38,6 +39,9 @@ cd nazdocker-lab
 # Create separate data directories for Alpine and Ubuntu
 mkdir -p data/{alpine,ubuntu}/{admin,user1,user2,user3,user4,user5}
 mkdir -p logs/{alpine,ubuntu}
+
+# Generate SSH host keys (optional - will be auto-generated if missing)
+./scripts/manage-ssh-keys.sh generate
 
 # Configure environment variables
 cp .env.example .env
@@ -79,6 +83,30 @@ ssh admin@localhost -p 2222
 
 ## 🔧 Configuration
 
+### SSH Key Management
+
+The lab environment uses shared SSH host keys between Alpine and Ubuntu containers to ensure consistent SSH connections:
+
+```bash
+# Generate new SSH host keys
+./scripts/manage-ssh-keys.sh generate
+
+# Check SSH key fingerprints
+./scripts/manage-ssh-keys.sh check
+
+# Backup SSH keys
+./scripts/manage-ssh-keys.sh backup
+
+# Restore SSH keys from backup
+./scripts/manage-ssh-keys.sh restore backup/ssh-20231201-143022
+```
+
+**Benefits:**
+- ✅ Same SSH host keys across both containers
+- ✅ No SSH host key warnings when switching containers
+- ✅ Centralized key management
+- ✅ Easy key rotation and backup
+
 ### Environment Variables
 
 The lab uses environment variables for secure configuration. Copy `.env.example` to `.env` and customize:
@@ -101,6 +129,7 @@ SSH_PORT=2222
 - **Change default passwords** immediately after first login
 - **Use SSH keys** instead of password authentication when possible
 - **Never commit** your `.env` file to version control
+- **SSH host keys are automatically ignored** by `.gitignore` for security
 - **Regular updates** of the base image and installed packages
 
 ## 🌐 Remote Access
@@ -159,6 +188,16 @@ nazdocker-lab/
 ├── README.md              # This file
 ├── docs/                 # Modular documentation
 ├── LICENSE                # GPL v3 license
+├── config/               # Configuration files
+│   └── ssh/              # Shared SSH host keys (gitignored)
+│       ├── ssh_host_rsa_key
+│       ├── ssh_host_rsa_key.pub
+│       ├── ssh_host_ecdsa_key
+│       ├── ssh_host_ecdsa_key.pub
+│       ├── ssh_host_ed25519_key
+│       └── ssh_host_ed25519_key.pub
+├── scripts/              # Utility scripts
+│   └── manage-ssh-keys.sh # SSH key management script
 ├── data/                  # Persistent user data (separated by container type)
 │   ├── alpine/           # Alpine container data
 │   │   ├── admin/        # Admin home directory (Alpine)
@@ -250,6 +289,7 @@ ssh admin@localhost -p 2222
 # Access Alpine lab (port 2223 - you'll need to modify SSH_PORT in .env)
 ssh admin@localhost -p 2223
 
+# Both containers use the same SSH host keys, so no key warnings when switching
 # Stop both environments
 docker-compose -f docker-compose.ubuntu.yml down
 docker-compose -f docker-compose.alpine.yml down
@@ -364,6 +404,7 @@ logs/
 - **User Groups**: `sudo` (Ubuntu) vs `wheel` (Alpine)
 - **Build Time**: Alpine builds ~50% faster
 - **Startup Time**: Alpine starts ~30% faster
+- **SSH Keys**: Both containers use identical SSH host keys for consistency
 
 ### Resource Limits
 Both versions are configured with optimized resource limits:

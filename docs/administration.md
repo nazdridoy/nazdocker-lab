@@ -10,4 +10,4 @@ permalink: /administration/
 
 Complete guides for administering and managing NazDocker Lab.
 
-This section covers container management, configuration, health monitoring, backup and recovery, advanced configuration, and useful scripts. 
+This section covers container management, configuration, health monitoring, backup and recovery, advanced configuration, SSH key synchronization, and useful scripts. 

@@ -215,6 +215,7 @@ ssh admin@localhost -p 2222
 # Access Alpine lab (port 2223 - you'll need to modify SSH_PORT in .env)
 ssh admin@localhost -p 2223
 
+# Both containers use the same SSH host keys
 # Stop both environments
 docker-compose -f docker-compose.ubuntu.yml down
 docker-compose -f docker-compose.alpine.yml down
@@ -410,6 +411,7 @@ docker inspect student-lab-ubuntu | grep -A 10 "Healthcheck"
 
 - **[Environment Variables](environment-variables.md)** - Configuration management
 - **[Health Monitoring](health-monitoring.md)** - System health and monitoring
+- **[SSH Key Synchronization](ssh-key-sync.md)** - SSH key management
 - **[User Management](../user-management/user-accounts.md)** - User account management
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Common container issues
 - **[Emergency Procedures](../troubleshooting/emergency.md)** - Emergency recovery

@@ -23,6 +23,8 @@ nazdocker-lab/
 ├── README.md                   # Project documentation                            
 ├── MANAGEMENT.md               # Legacy comprehensive guide                       
 ├── LICENSE                     # GPL v3 license                                   
+├── scripts/                    # Utility scripts                                  
+│   └── manage-ssh-keys.sh      # SSH key management script                       
 ├── data/                       # Persistent user data (separated by container type)
 │   ├── alpine/                 # Alpine container data                            
 │   │   ├── admin/              # Admin home directory (Alpine)                    
@@ -42,7 +44,13 @@ nazdocker-lab/
 │   ├── alpine/                 # Alpine container logs                            
 │   └── ubuntu/                 # Ubuntu container logs                            
 ├── config/                     # Configuration files                              
-│   └── ssh/                    # SSH configuration                                
+│   └── ssh/                    # Shared SSH host keys (gitignored)                
+│       ├── ssh_host_rsa_key    # RSA private key                                
+│       ├── ssh_host_rsa_key.pub # RSA public key                                
+│       ├── ssh_host_ecdsa_key  # ECDSA private key                              
+│       ├── ssh_host_ecdsa_key.pub # ECDSA public key                            
+│       ├── ssh_host_ed25519_key # ED25519 private key                           
+│       └── ssh_host_ed25519_key.pub # ED25519 public key                        
 └── docs/                       # Modular documentation                            
     ├── README.md               # Documentation index                              
     ├── getting-started/        # Getting started guides                           
@@ -255,10 +263,13 @@ data/
 **Structure**:
 ```
 config/
-└── ssh/                # SSH configuration
-    ├── sshd_config     # SSH server configuration
-    ├── authorized_keys # SSH public keys
-    └── known_hosts     # Known host keys
+└── ssh/                # Shared SSH host keys (gitignored)
+    ├── ssh_host_rsa_key        # RSA private key
+    ├── ssh_host_rsa_key.pub    # RSA public key
+    ├── ssh_host_ecdsa_key      # ECDSA private key
+    ├── ssh_host_ecdsa_key.pub  # ECDSA public key
+    ├── ssh_host_ed25519_key    # ED25519 private key
+    └── ssh_host_ed25519_key.pub # ED25519 public key
 ```
 
 ### Documentation Structure

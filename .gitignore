@@ -18,6 +18,7 @@ SENSITIVE_INFO.md
 config/ssh/authorized_keys
 config/ssh/id_rsa
 config/ssh/id_rsa.pub
+config/ssh/ssh_host_*
 
 # Ngrok configuration
 .ngrok2/
