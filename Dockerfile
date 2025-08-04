@@ -47,64 +47,16 @@ RUN wget https://github.com/playit-cloud/playit-agent/releases/download/v0.16.2/
     mv playit-linux-amd64 /usr/local/bin/playit-agent && \
     chmod +x /usr/local/bin/playit-agent
 
-# Create startup script
-RUN echo '#!/bin/bash\n\
-\n\
-# Create home directories and set permissions\n\
-mkdir -p /home/admin /home/user1 /home/user2 /home/user3 /home/user4 /home/user5\n\
-chown admin:admin /home/admin\n\
-chown user1:user1 /home/user1\n\
-chown user2:user2 /home/user2\n\
-chown user3:user3 /home/user3\n\
-chown user4:user4 /home/user4\n\
-chown user5:user5 /home/user5\n\
-chmod 750 /home/admin /home/user1 /home/user2 /home/user3 /home/user4 /home/user5\n\
-\n\
-# Set passwords at runtime\n\
-if [ -n "$ADMIN_PASSWORD" ]; then\n\
-    echo "admin:$ADMIN_PASSWORD" | chpasswd\n\
-else\n\
-    echo "admin:admin123" | chpasswd\n\
-fi\n\
-\n\
-if [ -n "$USER_PASSWORD" ]; then\n\
-    echo "user1:$USER_PASSWORD" | chpasswd\n\
-    echo "user2:$USER_PASSWORD" | chpasswd\n\
-    echo "user3:$USER_PASSWORD" | chpasswd\n\
-    echo "user4:$USER_PASSWORD" | chpasswd\n\
-    echo "user5:$USER_PASSWORD" | chpasswd\n\
-else\n\
-    echo "user1:user123" | chpasswd\n\
-    echo "user2:user123" | chpasswd\n\
-    echo "user3:user123" | chpasswd\n\
-    echo "user4:user123" | chpasswd\n\
-    echo "user5:user123" | chpasswd\n\
-fi\n\
-\n\
-# Set root password\n\
-if [ -n "$ROOT_PASSWORD" ]; then\n\
-    echo "root:$ROOT_PASSWORD" | chpasswd\n\
-else\n\
-    echo "root:root123" | chpasswd\n\
-fi\n\
-\n\
-# Start SSH server\n\
-service ssh start\n\
-\n\
-# Start playit.gg agent\n\
-if [ -n "$PLAYIT_SECRET_KEY" ]; then\n\
-    echo "Starting playit.gg agent..."\n\
-    playit-agent --secret $PLAYIT_SECRET_KEY --stdout &\n\
-else\n\
-    echo "Warning: PLAYIT_SECRET_KEY not set. SSH will only be accessible locally."\n\
-fi\n\
-\n\
-# Keep container running\n\
-tail -f /dev/null' > /start.sh && \
-    chmod +x /start.sh
+# Copy startup script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 # Expose SSH port
 EXPOSE 22
+
+# Health check to monitor SSH availability
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD service ssh status >/dev/null 2>&1 || exit 1
 
 # Set the default command
 CMD ["/start.sh"] 

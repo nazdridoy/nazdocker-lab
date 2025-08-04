@@ -58,6 +58,12 @@ docker-compose exec lab-environment <command>
 
 # Stop and remove everything
 docker-compose down -v --remove-orphans
+
+# Check container health status
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
+
+# View detailed health information
+docker inspect student-lab | grep -A 20 "Health"
 ```
 
 ## 🔧 Environment Configuration
@@ -506,6 +512,12 @@ docker-compose logs lab-environment
 
 # Check container health
 docker-compose exec lab-environment systemctl status ssh
+
+# Monitor health check status
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
+
+# View health check configuration
+docker inspect student-lab | grep -A 10 "Healthcheck"
 ```
 
 #### Resource Monitoring
@@ -568,6 +580,12 @@ docker port lab-environment
 
 # Test SSH locally
 docker-compose exec lab-environment ssh localhost
+
+# Check health status
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
+
+# View health check logs
+docker inspect student-lab | grep -A 20 "Health"
 ```
 
 #### Network Connectivity Issues
@@ -580,6 +598,46 @@ docker-compose exec lab-environment ifconfig
 
 # Check DNS resolution
 docker-compose exec lab-environment nslookup google.com
+```
+
+### Health Monitoring
+
+#### Health Check Overview
+The container includes built-in health checks that monitor SSH service availability:
+
+- **Interval**: 30 seconds between checks
+- **Timeout**: 10 seconds maximum for each check
+- **Start Period**: 40 seconds grace period after container startup
+- **Retries**: 3 consecutive failures before marking as unhealthy
+
+#### Health Status Monitoring
+```bash
+# Check container health status
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
+
+# View detailed health information
+docker inspect student-lab | grep -A 20 "Health"
+
+# Monitor health check logs
+docker inspect student-lab | grep -A 10 "Healthcheck"
+
+# Test health check manually
+docker-compose exec lab-environment service ssh status
+```
+
+#### Health Check Troubleshooting
+```bash
+# If container shows as unhealthy
+docker-compose exec lab-environment service ssh status
+
+# Restart SSH service if needed
+docker-compose exec lab-environment service ssh restart
+
+# Check SSH configuration
+docker-compose exec lab-environment cat /etc/ssh/sshd_config
+
+# View health check logs
+docker inspect student-lab | grep -A 20 "Health"
 ```
 
 ### Log Analysis
@@ -606,6 +664,33 @@ docker-compose exec lab-environment systemctl status --all
 ```
 
 ## ⚙️ Advanced Configuration
+
+### Startup Script Management
+
+The lab environment uses a modularized startup script (`start.sh`) that handles:
+- User account creation and password management
+- SSH service initialization
+- Playit.gg tunnel setup
+- Home directory permissions
+
+#### Modifying the Startup Script
+```bash
+# Edit the startup script
+nano start.sh
+
+# Rebuild container after changes
+docker-compose up -d --build
+
+# View startup script logs
+docker-compose logs lab-environment | grep -i "start\|ssh\|playit"
+```
+
+#### Startup Script Functions
+- **User Management**: Creates and configures all user accounts
+- **Password Configuration**: Sets passwords from environment variables
+- **SSH Setup**: Starts and configures SSH service
+- **Tunnel Management**: Initializes playit.gg tunneling
+- **Service Monitoring**: Keeps container running with health checks
 
 ### Customizing the Container
 
@@ -793,6 +878,10 @@ echo "Container Status:"
 docker-compose ps
 echo ""
 
+echo "Health Status:"
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
+echo ""
+
 echo "Recent Logs:"
 docker-compose logs --tail=20 lab-environment
 echo ""
@@ -838,6 +927,30 @@ case $ACTION in
 esac
 ```
 
+### Health Monitoring Script
+```bash
+#!/bin/bash
+# health-monitor.sh
+
+echo "=== NazDocker Lab Health Monitor ==="
+echo ""
+
+echo "Container Health Status:"
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Health}}"
+echo ""
+
+echo "Detailed Health Information:"
+docker inspect student-lab | grep -A 20 "Health"
+echo ""
+
+echo "SSH Service Status:"
+docker-compose exec lab-environment service ssh status
+echo ""
+
+echo "Recent Health Check Logs:"
+docker inspect student-lab | grep -A 10 "Healthcheck"
+```
+
 ### Backup Script
 ```bash
 #!/bin/bash
@@ -854,12 +967,43 @@ tar -czf "$BACKUP_DIR/user-data.tar.gz" data/
 # Backup configuration
 cp docker-compose.yml "$BACKUP_DIR/"
 cp Dockerfile "$BACKUP_DIR/"
+cp start.sh "$BACKUP_DIR/"
 
 # Backup container state
 docker-compose ps > "$BACKUP_DIR/container-status.txt"
 
 echo "Backup completed: $BACKUP_DIR"
 ```
+
+## 📁 Project Structure
+
+```
+nazdocker-lab/
+├── Dockerfile              # Container definition with health checks
+├── start.sh               # Modularized startup script
+├── docker-compose.yml      # Docker Compose orchestration
+├── .env.example           # Environment variables template
+├── README.md              # Project documentation
+├── MANAGEMENT.md          # This management guide
+├── LICENSE                # GPL v3 license
+├── data/                  # Persistent user data
+│   ├── admin/            # Admin home directory
+│   ├── user1/            # User1 home directory
+│   ├── user2/            # User2 home directory
+│   ├── user3/            # User3 home directory
+│   ├── user4/            # User4 home directory
+│   └── user5/            # User5 home directory
+└── logs/                 # Application logs
+```
+
+### Key Files Explained
+
+- **`Dockerfile`**: Container definition with health checks and user setup
+- **`start.sh`**: Modularized startup script for runtime configuration
+- **`docker-compose.yml`**: Orchestration and volume management
+- **`.env.example`**: Template for environment variable configuration
+- **`data/`**: Persistent storage for user home directories
+- **`logs/`**: Application and service logs
 
 ---
 

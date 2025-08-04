@@ -14,6 +14,7 @@ A secure, containerized development environment for educational and development 
 - **💾 Persistent Storage**: User data persists across container restarts
 - **⚙️ Runtime Configuration**: Environment-based configuration management
 - **🔒 Security Focused**: Proper user isolation and SSH key support
+- **🏥 Health Monitoring**: Built-in health checks for SSH service availability
 
 ## 📋 Prerequisites
 
@@ -134,7 +135,8 @@ ssh admin@your-tunnel-url.playit.gg -p 12345
 
 ```
 nazdocker-lab/
-├── Dockerfile              # Container definition
+├── Dockerfile              # Container definition with health checks
+├── start.sh               # Modularized startup script
 ├── docker-compose.yml      # Docker Compose orchestration
 ├── .env.example           # Environment variables template
 ├── README.md              # This file
@@ -171,6 +173,32 @@ nazdocker-lab/
 3. **Use strong, unique passwords** for each user
 4. **Regular security updates** of the base image
 5. **Monitor access logs** for suspicious activity
+
+## 🏥 Health Monitoring
+
+The container includes built-in health checks that monitor SSH service availability:
+
+- **Health Check Interval**: 30 seconds
+- **Timeout**: 10 seconds per check
+- **Start Period**: 40 seconds grace period after container startup
+- **Retries**: 3 consecutive failures before marking as unhealthy
+
+### Health Status
+- **Healthy**: SSH service is running and accepting connections
+- **Unhealthy**: SSH service is stopped or not responding
+- **Starting**: Container is in the grace period after startup
+
+### Monitoring Health Status
+```bash
+# Check container health status
+docker ps
+
+# View detailed health information
+docker inspect student-lab | grep -A 20 "Health"
+
+# Monitor health check logs
+docker inspect student-lab | grep -A 10 "Healthcheck"
+```
 
 ## 📚 Documentation
 
