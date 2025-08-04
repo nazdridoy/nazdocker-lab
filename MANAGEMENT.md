@@ -33,7 +33,7 @@ docker-compose restart
 docker-compose logs -f
 
 # Access container shell
-docker-compose exec lab-environment bash
+docker-compose exec lab-environment-ubuntu bash
 
 # Validate configuration
 docker-compose config
@@ -57,7 +57,7 @@ docker-compose -f docker-compose.alpine.yml restart
 docker-compose -f docker-compose.alpine.yml logs -f
 
 # Access container shell
-docker-compose -f docker-compose.alpine.yml exec lab-environment bash
+docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine bash
 
 # Validate configuration
 docker-compose -f docker-compose.alpine.yml config
@@ -77,10 +77,10 @@ docker ps
 docker ps -a
 
 # View container logs
-docker-compose logs lab-environment
+docker-compose logs lab-environment-ubuntu
 
 # Execute command in container
-docker-compose exec lab-environment <command>
+docker-compose exec lab-environment-ubuntu <command>
 
 # Stop and remove everything
 docker-compose down -v --remove-orphans
@@ -101,10 +101,10 @@ docker ps
 docker ps -a
 
 # View container logs
-docker-compose -f docker-compose.alpine.yml logs lab-environment
+docker-compose -f docker-compose.alpine.yml logs lab-environment-alpine
 
 # Execute command in container
-docker-compose -f docker-compose.alpine.yml exec lab-environment <command>
+docker-compose -f docker-compose.alpine.yml exec lab-environment-alpine <command>
 
 # Stop and remove everything
 docker-compose -f docker-compose.alpine.yml down -v --remove-orphans

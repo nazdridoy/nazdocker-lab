@@ -1,10 +1,11 @@
 version: '3.8'
 
 services:
-  lab-environment:
+  lab-environment-alpine:
     build:
       context: .
       dockerfile: Dockerfile.alpine
+    image: nazdocker-lab:alpine
     container_name: student-lab-alpine
     hostname: nazapilab-alpine
     ports:

@@ -188,6 +188,18 @@ ssh admin@localhost -p 2222
 docker-compose -f docker-compose.alpine.yml down
 ```
 
+### Building Images
+```bash
+# Build Ubuntu image
+docker-compose build
+
+# Build Alpine image
+docker-compose -f docker-compose.alpine.yml build
+
+# Build both images
+docker-compose build && docker-compose -f docker-compose.alpine.yml build
+```
+
 ## 🛡️ Security Considerations
 
 ### Default Configuration

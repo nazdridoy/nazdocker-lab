@@ -1,8 +1,9 @@
 version: '3.8'
 
 services:
-  lab-environment:
+  lab-environment-ubuntu:
     build: .
+    image: nazdocker-lab:ubuntu
     container_name: student-lab
     hostname: nazapilab
     ports:
