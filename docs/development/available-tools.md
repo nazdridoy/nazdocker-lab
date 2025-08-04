@@ -1,3 +1,11 @@
+---
+layout: default
+title: Available Development Tools
+parent: Development
+nav_order: 1
+permalink: /development/available-tools/
+---
+
 # Available Development Tools
 
 Complete overview of development tools and utilities available in NazDocker Lab.
@@ -410,15 +418,3 @@ npm install -g nodemon pm2
 - **[Environment Variables](../administration/environment-variables.md)** - Configuration management
 - **[User Management](../user-management/user-accounts.md)** - User account management
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Common development issues
-
-## 📋 Best Practices
-
-1. **Use virtual environments** for Python projects
-2. **Use package.json** for Node.js dependencies
-3. **Keep tools updated** regularly
-4. **Use version control** for all projects
-5. **Write tests** for your code
-6. **Use linting tools** for code quality
-7. **Monitor resource usage** during development
-
- 

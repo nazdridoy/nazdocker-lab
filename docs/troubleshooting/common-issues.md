@@ -1,3 +1,11 @@
+---
+layout: default
+title: Common Issues and Solutions
+parent: Troubleshooting
+nav_order: 1
+permalink: /troubleshooting/common-issues/
+---
+
 # Common Issues and Solutions
 
 Quick solutions to the most frequent problems encountered with NazDocker Lab.
@@ -341,15 +349,3 @@ echo ""
 - **[Container Management](../administration/container-management.md)** - Container operations
 - **[Health Monitoring](../administration/health-monitoring.md)** - System health monitoring
 - **[Environment Variables](../administration/environment-variables.md)** - Configuration management
-
-## 📋 Prevention Tips
-
-1. **Regular backups** of important data
-2. **Monitor resource usage** to prevent issues
-3. **Keep Docker updated** for latest fixes
-4. **Use health checks** to catch issues early
-5. **Test changes** in a safe environment first
-6. **Document customizations** for easier troubleshooting
-7. **Regular cleanup** of unused resources
-
- 

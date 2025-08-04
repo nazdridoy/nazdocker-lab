@@ -1,3 +1,11 @@
+---
+layout: default
+title: Advanced Configuration
+parent: Administration
+nav_order: 5
+permalink: /administration/advanced-configuration/
+---
+
 # Advanced Configuration
 
 Complete guide for advanced configuration and customization of NazDocker Lab.
@@ -487,23 +495,3 @@ echo "Performance tuning completed"
 - **[Health Monitoring](health-monitoring.md)** - System health monitoring
 - **[Backup and Recovery](backup-recovery.md)** - Data backup and restoration
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Common configuration issues
-
-## 📋 Best Practices
-
-1. **Test changes** in a development environment first
-2. **Document customizations** for future reference
-3. **Monitor performance** after making changes
-4. **Use version control** for configuration files
-5. **Backup before major changes**
-6. **Follow security best practices** when customizing
-7. **Regular performance audits** to ensure optimization
-
-## ⚠️ Important Notes
-
-- **Advanced configuration** requires understanding of Docker and Linux
-- **Test thoroughly** before applying to production
-- **Monitor resource usage** after optimization
-- **Keep backups** of original configurations
-- **Document all changes** for troubleshooting
-
- 

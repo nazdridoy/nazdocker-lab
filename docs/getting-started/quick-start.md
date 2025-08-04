@@ -1,3 +1,11 @@
+---
+layout: default
+title: Quick Start Guide
+parent: Getting Started
+nav_order: 1
+permalink: /getting-started/quick-start/
+---
+
 # Quick Start Guide
 
 Get NazDocker Lab up and running in minutes with this quick start guide.
@@ -117,5 +125,3 @@ ssh user1@localhost -p 2222
 - **[Common Issues](../troubleshooting/common-issues.md)** - Solutions to frequent problems
 - **[Diagnostic Commands](../troubleshooting/diagnostics.md)** - Troubleshooting tools
 - **[Emergency Procedures](../troubleshooting/emergency.md)** - Emergency recovery
-
- 

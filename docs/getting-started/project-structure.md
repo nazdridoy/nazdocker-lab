@@ -1,3 +1,11 @@
+---
+layout: default
+title: Project Structure
+parent: Getting Started
+nav_order: 2
+permalink: /getting-started/project-structure/
+---
+
 # Project Structure
 
 Complete overview of NazDocker Lab project structure and file organization.
@@ -359,23 +367,3 @@ MANAGEMENT.md → Modular docs/ → Organized by topic
 - **[Environment Variables](../administration/environment-variables.md)** - Configuration management
 - **[Backup and Recovery](../administration/backup-recovery.md)** - Data protection
 - **[Alpine vs Ubuntu Comparison](../alpine-ubuntu/comparison.md)** - Version differences
-
-## 📋 Best Practices
-
-1. **Use version control** for all configuration files
-2. **Keep sensitive data** in `.env` files (not in version control)
-3. **Regular backups** of `data/` directory
-4. **Document changes** to configuration files
-5. **Test changes** in development environment first
-6. **Monitor file sizes** and resource usage
-7. **Keep documentation** up to date with changes
-
-## ⚠️ Important Notes
-
-- **Backup data** before major configuration changes
-- **Test thoroughly** before applying to production
-- **Monitor performance** after configuration changes
-- **Document all changes** for troubleshooting
-- **Keep backups** of original configurations
-
- 

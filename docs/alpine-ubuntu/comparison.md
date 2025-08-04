@@ -1,3 +1,11 @@
+---
+layout: default
+title: Alpine vs Ubuntu Comparison
+parent: Alpine vs Ubuntu
+nav_order: 1
+permalink: /alpine-ubuntu/comparison/
+---
+
 # Alpine vs Ubuntu Comparison
 
 Detailed comparison between Alpine and Ubuntu versions of NazDocker Lab.
@@ -242,21 +250,3 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 - **[Container Management](../administration/container-management.md)** - Alpine and Ubuntu container operations
 - **[Advanced Configuration](../administration/advanced-configuration.md)** - System optimization and configuration
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Common issues
-
-## 📝 Best Practices
-
-### For Alpine Users
-1. **Use apk** instead of apt for package management
-2. **Use pgrep** for process checking
-3. **Use rc-service** for service management
-4. **Keep packages minimal** to maintain size benefits
-5. **Test thoroughly** as Alpine has different libraries
-
-### For Ubuntu Users
-1. **Use apt** for package management
-2. **Use service/systemctl** for service management
-3. **Use familiar commands** and utilities
-4. **Leverage Ubuntu ecosystem** for compatibility
-5. **Use comprehensive tooling** available in Ubuntu
-
- 

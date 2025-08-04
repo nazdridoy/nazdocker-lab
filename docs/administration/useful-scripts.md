@@ -1,3 +1,11 @@
+---
+layout: default
+title: Useful Scripts
+parent: Administration
+nav_order: 6
+permalink: /administration/useful-scripts/
+---
+
 # Useful Scripts
 
 Complete collection of useful scripts for managing NazDocker Lab.
@@ -547,23 +555,3 @@ done
 - **[Backup and Recovery](backup-recovery.md)** - Data backup and restoration
 - **[Emergency Procedures](../troubleshooting/emergency.md)** - Emergency recovery procedures
 - **[Diagnostic Commands](../troubleshooting/diagnostics.md)** - Troubleshooting tools
-
-## 📋 Best Practices
-
-1. **Make scripts executable** with `chmod +x script-name.sh`
-2. **Test scripts** before using in production
-3. **Document script usage** and parameters
-4. **Keep scripts organized** in a dedicated directory
-5. **Version control scripts** for tracking changes
-6. **Regular script maintenance** to keep them updated
-7. **Backup scripts** along with other configuration
-
-## ⚠️ Important Notes
-
-- **Always test scripts** in a safe environment first
-- **Keep script backups** in case of corruption
-- **Document script dependencies** and requirements
-- **Monitor script execution** for errors
-- **Update scripts** when system configuration changes
-
- 

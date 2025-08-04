@@ -1,3 +1,11 @@
+---
+layout: default
+title: SSH Access Guide
+parent: Remote Access
+nav_order: 1
+permalink: /remote-access/ssh-access/
+---
+
 # SSH Access Guide
 
 Complete guide for accessing NazDocker Lab via SSH.
@@ -333,15 +341,3 @@ ssh -Y admin@localhost -p 2222
 - **[SSH Key Setup](../user-management/ssh-keys.md)** - SSH key authentication setup
 - **[Security Overview](../security/security-overview.md)** - Security best practices
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Common SSH issues
-
-## 📋 Best Practices
-
-1. **Change default passwords** immediately after first login
-2. **Use SSH keys** instead of passwords when possible
-3. **Keep SSH keys secure** with proper permissions
-4. **Monitor SSH logs** for suspicious activity
-5. **Use strong authentication** methods
-6. **Regular security updates** of SSH configuration
-7. **Backup SSH keys** and configurations
-
- 

@@ -1,0 +1,11 @@
+remote_theme: just-the-docs/just-the-docs
+title: NazDocker Lab Documentation
+description: Complete documentation for NazDocker Lab - A secure, containerized development environment
+color_scheme: dark
+aux_links:
+  "NazDocker Lab on GitHub":
+    - "https://github.com/nazdridoy/nazdocker-lab"
+baseurl: /nazdocker-lab
+plugins:
+  - jekyll-remote-theme
+show_downloads: false 

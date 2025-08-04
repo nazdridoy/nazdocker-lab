@@ -1,3 +1,11 @@
+---
+layout: default
+title: Password Management
+parent: User Management
+nav_order: 2
+permalink: /user-management/passwords/
+---
+
 # Password Management
 
 Complete guide for managing passwords in NazDocker Lab.
@@ -302,23 +310,3 @@ grep 'Account locked' /var/log/auth.log
 - **[Environment Variables](../administration/environment-variables.md)** - Password configuration via environment variables
 - **[Security Overview](../security/security-overview.md)** - Security best practices
 - **[SSH Access](../remote-access/ssh-access.md)** - SSH access and authentication
-
-## 📋 Best Practices
-
-1. **Change default passwords** immediately after first login
-2. **Use strong, unique passwords** for each account
-3. **Regular password rotation** (every 90 days)
-4. **Monitor failed login attempts** for security
-5. **Use SSH keys** instead of passwords when possible
-6. **Implement password policies** for complexity requirements
-7. **Keep password recovery procedures** documented
-
-## ⚠️ Important Notes
-
-- **Never share passwords** or commit them to version control
-- **Use environment variables** for automated password management
-- **Monitor password changes** for security auditing
-- **Have emergency recovery procedures** ready
-- **Regular security audits** of password policies
-
- 

@@ -1,3 +1,11 @@
+---
+layout: default
+title: Health Monitoring
+parent: Administration
+nav_order: 3
+permalink: /administration/health-monitoring/
+---
+
 # Health Monitoring
 
 Complete guide for monitoring system health in NazDocker Lab.
@@ -340,23 +348,3 @@ exit 0
 - **[Emergency Procedures](../troubleshooting/emergency.md)** - Emergency recovery
 - **[Backup and Recovery](backup-recovery.md)** - Data backup and restoration
 - **[Advanced Configuration](advanced-configuration.md)** - System optimization
-
-## 📋 Best Practices
-
-1. **Monitor health status** regularly
-2. **Set up alerts** for critical issues
-3. **Collect metrics** for trend analysis
-4. **Document health procedures** clearly
-5. **Test health checks** thoroughly
-6. **Monitor resource usage** to prevent issues
-7. **Keep logs manageable** with rotation
-
-## ⚠️ Important Notes
-
-- **Health checks are critical** for monitoring system status
-- **Set up automated monitoring** for production environments
-- **Document alert procedures** for critical issues
-- **Regular health audits** help prevent problems
-- **Monitor trends** to identify potential issues early
-
- 

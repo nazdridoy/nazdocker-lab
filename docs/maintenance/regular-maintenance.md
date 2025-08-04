@@ -1,3 +1,11 @@
+---
+layout: default
+title: Regular Maintenance
+parent: Maintenance
+nav_order: 1
+permalink: /maintenance/regular-maintenance/
+---
+
 # Regular Maintenance
 
 Complete guide for maintaining and managing NazDocker Lab environment.
@@ -408,23 +416,3 @@ echo "- Documentation review"
 - **[Backup and Recovery](../administration/backup-recovery.md)** - Data backup and restoration
 - **[Emergency Procedures](../troubleshooting/emergency.md)** - Emergency recovery procedures
 - **[Advanced Configuration](../administration/advanced-configuration.md)** - System optimization guidelines
-
-## 📋 Best Practices
-
-1. **Schedule regular maintenance** to prevent issues
-2. **Document all maintenance activities** for audit trails
-3. **Test procedures** before applying to production
-4. **Keep backups** before major maintenance
-5. **Monitor system health** after maintenance
-6. **Automate routine tasks** with scripts
-7. **Review maintenance logs** for improvements
-
-## ⚠️ Important Notes
-
-- **Always backup** before major maintenance
-- **Test procedures** in a safe environment first
-- **Document all changes** for troubleshooting
-- **Monitor system health** after maintenance
-- **Keep maintenance schedules** consistent
-
- 

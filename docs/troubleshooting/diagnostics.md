@@ -1,3 +1,11 @@
+---
+layout: default
+title: Diagnostic Commands
+parent: Troubleshooting
+nav_order: 2
+permalink: /troubleshooting/diagnostics/
+---
+
 # Diagnostic Commands
 
 Complete guide for troubleshooting and diagnostics in NazDocker Lab.
@@ -353,23 +361,3 @@ docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu journalc
 - **[Health Monitoring](../administration/health-monitoring.md)** - System health monitoring
 - **[Container Management](../administration/container-management.md)** - Container operations
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Common issues
-
-## 📋 Best Practices
-
-1. **Run diagnostics regularly** to catch issues early
-2. **Document diagnostic procedures** for consistency
-3. **Use automated scripts** for routine checks
-4. **Monitor trends** in diagnostic output
-5. **Keep diagnostic tools updated**
-6. **Test diagnostic procedures** regularly
-7. **Document findings** for future reference
-
-## ⚠️ Important Notes
-
-- **Run diagnostics before making changes** to understand the current state
-- **Keep diagnostic output** for troubleshooting
-- **Use multiple diagnostic tools** for comprehensive analysis
-- **Document diagnostic procedures** for team use
-- **Regular diagnostic checks** help prevent issues
-
- 

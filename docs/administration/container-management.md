@@ -1,3 +1,11 @@
+---
+layout: default
+title: Container Management
+parent: Administration
+nav_order: 1
+permalink: /administration/container-management/
+---
+
 # Container Management
 
 Complete guide for managing Docker containers in NazDocker Lab.
@@ -344,15 +352,3 @@ docker inspect student-lab-ubuntu | grep -A 10 "Healthcheck"
 - **[User Management](../user-management/user-accounts.md)** - User account management
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Common container issues
 - **[Emergency Procedures](../troubleshooting/emergency.md)** - Emergency recovery
-
-## 📋 Best Practices
-
-1. **Always use health checks** to monitor container status
-2. **Monitor resource usage** regularly
-3. **Keep logs manageable** with log rotation
-4. **Use volumes** for persistent data
-5. **Regular cleanup** of unused resources
-6. **Backup important data** before major operations
-7. **Test changes** in a safe environment first
-
- 

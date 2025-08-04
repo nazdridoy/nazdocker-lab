@@ -1,3 +1,11 @@
+---
+layout: default
+title: Backup and Recovery
+parent: Administration
+nav_order: 4
+permalink: /administration/backup-recovery/
+---
+
 # Backup and Recovery
 
 Complete guide for backing up and recovering NazDocker Lab data and configuration.
@@ -339,23 +347,3 @@ echo ""
 - **[User Management](../user-management/user-accounts.md)** - User account management
 - **[Emergency Procedures](../troubleshooting/emergency.md)** - Emergency recovery procedures
 - **[Maintenance](../maintenance/regular-maintenance.md)** - Regular maintenance tasks
-
-## 📋 Best Practices
-
-1. **Regular backups** - Schedule automated backups
-2. **Test restores** - Verify backup integrity regularly
-3. **Multiple locations** - Store backups in different locations
-4. **Version control** - Keep configuration in version control
-5. **Documentation** - Document backup and restore procedures
-6. **Monitoring** - Monitor backup success and disk space
-7. **Retention policy** - Implement backup retention policy
-
-## ⚠️ Important Notes
-
-- **Always test restores** before relying on backups
-- **Keep backups secure** - encrypt sensitive data
-- **Monitor disk space** - ensure sufficient space for backups
-- **Document procedures** - maintain clear backup/restore documentation
-- **Regular verification** - check backup integrity periodically
-
- 

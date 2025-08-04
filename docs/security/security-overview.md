@@ -1,3 +1,11 @@
+---
+layout: default
+title: Security Overview
+parent: Security
+nav_order: 1
+permalink: /security/security-overview/
+---
+
 # Security Overview
 
 Complete security guide for NazDocker Lab environment.
@@ -369,23 +377,3 @@ echo ""
 - **[SSH Key Setup](../user-management/ssh-keys.md)** - SSH key authentication
 - **[Password Management](../user-management/passwords.md)** - Password security
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Security issues
-
-## 📋 Security Best Practices
-
-1. **Change default passwords** immediately after setup
-2. **Use SSH keys** instead of passwords when possible
-3. **Regular security updates** of system packages
-4. **Monitor access logs** for suspicious activity
-5. **Implement firewall rules** to restrict access
-6. **Regular security audits** to identify vulnerabilities
-7. **Keep security documentation** up-to-date
-
-## ⚠️ Important Security Notes
-
-- **Never share credentials** or SSH keys
-- **Monitor logs regularly** for unauthorized access
-- **Keep systems updated** with security patches
-- **Use strong authentication** methods
-- **Document security procedures** for incident response
-
- 

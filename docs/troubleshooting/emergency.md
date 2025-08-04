@@ -1,3 +1,11 @@
+---
+layout: default
+title: Emergency Procedures
+parent: Troubleshooting
+nav_order: 3
+permalink: /troubleshooting/emergency/
+---
+
 # Emergency Procedures
 
 Emergency recovery procedures for critical situations in NazDocker Lab.
@@ -304,23 +312,3 @@ ifconfig > network-info.txt
 - **[Backup and Recovery](../administration/backup-recovery.md)** - Data backup and restoration
 - **[Container Management](../administration/container-management.md)** - Container operations
 - **[Security Overview](../security/security-overview.md)** - Security best practices
-
-## ⚠️ Important Warnings
-
-1. **Always backup data** before emergency procedures
-2. **Document all changes** made during emergency recovery
-3. **Test procedures** in a safe environment first
-4. **Keep emergency contacts** readily available
-5. **Have recovery procedures** documented and accessible
-
-## 📋 Emergency Checklist
-
-- [ ] **Assess the situation** - What's broken?
-- [ ] **Backup current state** - Save any recoverable data
-- [ ] **Try standard fixes** - Restart services, check logs
-- [ ] **Apply emergency procedures** - Use recovery scripts
-- [ ] **Verify recovery** - Test functionality
-- [ ] **Document incident** - Record what happened and what was done
-- [ ] **Prevent recurrence** - Implement safeguards
-
- 

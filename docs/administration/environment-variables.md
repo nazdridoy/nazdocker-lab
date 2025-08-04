@@ -1,3 +1,11 @@
+---
+layout: default
+title: Environment Variables Configuration
+parent: Administration
+nav_order: 2
+permalink: /administration/environment-variables/
+---
+
 # Environment Variables Configuration
 
 Comprehensive guide for configuring NazDocker Lab using environment variables.
@@ -177,20 +185,3 @@ docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu ping goo
 - **[SSH Key Setup](../user-management/ssh-keys.md)** - Secure authentication
 - **[Health Monitoring](health-monitoring.md)** - System monitoring
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Common configuration issues
-
-## 📝 Example .env File
-
-```bash
-# Required: Playit.gg secret key for public access
-PLAYIT_SECRET_KEY=your_playit_secret_key_here
-
-# User passwords (change these!)
-ADMIN_PASSWORD=your_admin_password_here
-USER_PASSWORD=your_user_password_here
-ROOT_PASSWORD=your_root_password_here
-
-# Optional: SSH port mapping
-SSH_PORT=2222
-```
-
- 

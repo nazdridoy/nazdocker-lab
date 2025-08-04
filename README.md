@@ -4,6 +4,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Required-blue.svg)](https://www.docker.com/)
 [![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04-orange.svg)](https://ubuntu.com/)
 [![Alpine](https://img.shields.io/badge/Alpine-3.22-lightblue.svg)](https://alpinelinux.org/)
+[![Documentation](https://img.shields.io/badge/Documentation-Complete-brightgreen.svg)](https://nazdridoy.github.io/nazdocker-lab/)
 
 A secure, containerized development environment for educational and development purposes. This project provides a Docker-based lab environment with SSH access, multiple user accounts, and development tools, designed for learning, testing, and development workflows.
 
@@ -153,7 +154,7 @@ nazdocker-lab/
 ├── docker-compose.alpine.yml # Alpine Docker Compose orchestration
 ├── .env.example           # Environment variables template
 ├── README.md              # This file
-├── MANAGEMENT.md          # Detailed management guide
+├── docs/                 # Modular documentation
 ├── LICENSE                # GPL v3 license
 ├── data/                  # Persistent user data
 │   ├── admin/            # Admin home directory
@@ -287,7 +288,13 @@ Both versions are configured with optimized resource limits:
 
 ## 📚 Documentation
 
-- **[MANAGEMENT.md](MANAGEMENT.md)**: Comprehensive management guide
+- **[Documentation Index](docs/index.md)**: Complete modular documentation
+- **[Quick Start Guide](docs/getting-started/quick-start.md)**: Get up and running in minutes
+- **[Project Structure](docs/getting-started/project-structure.md)**: Complete project overview
+- **[Container Management](docs/administration/container-management.md)**: Docker container operations
+- **[User Management](docs/user-management/user-accounts.md)**: User account management
+- **[Remote Access](docs/remote-access/ssh-access.md)**: SSH access and tunneling
+- **[Troubleshooting](docs/troubleshooting/common-issues.md)**: Common issues and solutions
 - **[Docker Documentation](https://docs.docker.com/)**: Docker basics
 - **[SSH Documentation](https://www.openssh.com/manual.html)**: SSH configuration
 
@@ -345,7 +352,7 @@ ls -la .env
 docker-compose config | grep -E "(PLAYIT_SECRET_KEY|ADMIN_PASSWORD)"
 ```
 
-For more detailed troubleshooting, see [MANAGEMENT.md](MANAGEMENT.md).
+For more detailed troubleshooting, see [Troubleshooting Guide](docs/troubleshooting/common-issues.md).
 
 ## 📄 License
 
@@ -362,7 +369,7 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 - **Issues**: [GitHub Issues](https://github.com/nazdridoy/nazdocker-lab/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/nazdridoy/nazdocker-lab/discussions)
-- **Documentation**: [MANAGEMENT.md](MANAGEMENT.md)
+- **Documentation**: [Documentation Index](docs/index.md)
 
 ---
 

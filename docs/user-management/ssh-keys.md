@@ -1,3 +1,11 @@
+---
+layout: default
+title: SSH Key Setup
+parent: User Management
+nav_order: 3
+permalink: /user-management/ssh-keys/
+---
+
 # SSH Key Setup
 
 Complete guide for setting up SSH key authentication in NazDocker Lab.
@@ -319,23 +327,3 @@ docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu tail -f 
 - **[Password Management](passwords.md)** - Password configuration
 - **[Security Overview](../security/security-overview.md)** - Security best practices
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Common SSH issues
-
-## 📋 Best Practices
-
-1. **Use Ed25519 keys** for best security and performance
-2. **Set proper permissions** on SSH keys and directories
-3. **Use SSH config files** for easier management
-4. **Regular key rotation** for security
-5. **Monitor key usage** for suspicious activity
-6. **Backup SSH keys** securely
-7. **Use passphrases** for additional security
-
-## ⚠️ Important Notes
-
-- **Keep private keys secure** and never share them
-- **Backup SSH keys** in a secure location
-- **Monitor SSH logs** for unauthorized access attempts
-- **Regular key rotation** improves security
-- **Test key authentication** before disabling passwords
-
- 

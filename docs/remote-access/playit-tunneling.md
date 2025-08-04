@@ -1,3 +1,11 @@
+---
+layout: default
+title: Playit.gg Tunneling
+parent: Remote Access
+nav_order: 2
+permalink: /remote-access/playit-tunneling/
+---
+
 # Playit.gg Tunneling
 
 Complete guide for setting up and managing Playit.gg tunneling for public SSH access.
@@ -255,23 +263,3 @@ docker-compose -f docker-compose.ubuntu.yml exec lab-environment-ubuntu tail -f 
 - **[Environment Variables](../administration/environment-variables.md)** - Configuration management
 - **[Troubleshooting](../troubleshooting/common-issues.md)** - Common tunnel issues
 - **[Security Overview](../security/security-overview.md)** - Security best practices
-
-## 📋 Best Practices
-
-1. **Keep secret keys secure** and never share them
-2. **Monitor tunnel status** regularly
-3. **Use strong SSH authentication** for tunnel access
-4. **Regular tunnel health checks** to ensure availability
-5. **Backup tunnel configuration** for recovery
-6. **Monitor tunnel logs** for issues
-7. **Test tunnel connectivity** regularly
-
-## ⚠️ Important Notes
-
-- **Tunnel URLs may change** when restarting the container
-- **Check logs regularly** for tunnel status updates
-- **Use SSH keys** instead of passwords for tunnel access
-- **Monitor resource usage** as tunnels consume bandwidth
-- **Keep tunnel configuration** documented and accessible
-
- 

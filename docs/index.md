@@ -1,3 +1,10 @@
+---
+layout: default
+title: NazDocker Lab Documentation
+nav_order: 1
+permalink: /
+---
+
 # NazDocker Lab Documentation
 
 Welcome to the NazDocker Lab documentation. This modular documentation system provides comprehensive guides for managing and using the NazDocker Lab environment.
@@ -88,22 +95,3 @@ NazDocker Lab is a secure, containerized development environment that provides:
 - **[MANAGEMENT.md](../MANAGEMENT.md)** - Legacy comprehensive guide (being replaced)
 - **[GitHub Repository](https://github.com/nazdridoy/nazdocker-lab)** - Source code and issues
 - **[Docker Documentation](https://docs.docker.com/)** - Docker basics and advanced topics
-
-## 📝 Contributing to Documentation
-
-To improve this documentation:
-
-1. Fork the repository
-2. Create a feature branch for your changes
-3. Make your edits in the appropriate modular file
-4. Test your changes locally
-5. Submit a pull request
-
-### Documentation Standards
-
-- Use clear, concise language
-- Include practical examples
-- Cross-reference related topics
-- Keep information up-to-date
-- Follow the existing structure and formatting
-

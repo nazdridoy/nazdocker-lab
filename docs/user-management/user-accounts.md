@@ -1,3 +1,11 @@
+---
+layout: default
+title: User Account Management
+parent: User Management
+nav_order: 1
+permalink: /user-management/user-accounts/
+---
+
 # User Account Management
 
 Complete guide for managing user accounts in NazDocker Lab.
@@ -269,15 +277,3 @@ esac
 - **[Environment Variables](../administration/environment-variables.md)** - User configuration via environment variables
 - **[Security Overview](../security/security-overview.md)** - Security best practices
 - **[Container Management](../administration/container-management.md)** - Managing the container environment
-
-## 📝 Best Practices
-
-1. **Change default passwords** immediately after first login
-2. **Use SSH keys** instead of passwords when possible
-3. **Regular user audits** to remove unused accounts
-4. **Monitor access logs** for suspicious activity
-5. **Backup user data** regularly
-6. **Use strong passwords** for all accounts
-7. **Limit sudo access** to necessary users only
-
- 
