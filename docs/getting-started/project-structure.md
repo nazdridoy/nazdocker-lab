@@ -39,10 +39,7 @@ nazdocker-lab/
 │       ├── user2/              # User2 home directory (Ubuntu)                    
 │       ├── user3/              # User3 home directory (Ubuntu)                    
 │       ├── user4/              # User4 home directory (Ubuntu)                    
-│       └── user5/              # User5 home directory (Ubuntu)                    
-├── logs/                       # Application logs (separated by container type)   
-│   ├── alpine/                 # Alpine container logs                            
-│   └── ubuntu/                 # Ubuntu container logs                            
+│       └── user5/              # User5 home directory (Ubuntu)                                             
 ├── config/                     # Configuration files                              
 │   └── ssh/                    # Shared SSH host keys (gitignored)                
 │       ├── ssh_host_rsa_key    # RSA private key                                
@@ -153,7 +150,6 @@ services:
       - "${SSH_PORT:-2222}:22"
     volumes:
       - ./data:/home
-      - ./logs:/var/log
     environment:
       - PLAYIT_SECRET_KEY=${PLAYIT_SECRET_KEY}
     healthcheck:
@@ -249,14 +245,7 @@ data/
 - Automatic permission management
 - Backup and restore support
 
-#### `logs/`
-**Purpose**: Application and service logs
-**Contents**:
-- SSH service logs
-- System logs
-- Application logs
-- Error logs
-- Access logs
+
 
 #### `config/`
 **Purpose**: Configuration files and settings
@@ -329,7 +318,6 @@ docs/
 | Directory | Purpose | Persistence |
 |-----------|---------|-------------|
 | `data/` | User home directories | Persistent |
-| `logs/` | Application logs | Persistent |
 | `config/` | Configuration files | Persistent |
 
 ### Documentation Files

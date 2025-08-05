@@ -91,7 +91,6 @@ docker system prune -a --volumes
 
 # Recreate data directories
 mkdir -p data/{alpine,ubuntu}/{admin,user1,user2,user3,user4,user5}
-mkdir -p logs/{alpine,ubuntu}
 
 # Restart fresh
 docker-compose -f docker-compose.ubuntu.yml up -d --build
@@ -145,7 +144,6 @@ docker system prune -f
 
 echo "3. Recreating data directories..."
 mkdir -p data/{alpine,ubuntu}/{admin,user1,user2,user3,user4,user5}
-mkdir -p logs/{alpine,ubuntu}
 
 echo "4. Starting fresh container..."
 docker-compose -f docker-compose.ubuntu.yml up -d --build

@@ -66,8 +66,8 @@ Detailed comparison between Alpine and Ubuntu versions of NazDocker Lab.
 
 Both Alpine and Ubuntu versions use separate volume directories to ensure complete isolation:
 
-- **Alpine Container**: Data in `./data/alpine/`, logs in `./logs/alpine/`
-- **Ubuntu Container**: Data in `./data/ubuntu/`, logs in `./logs/ubuntu/`
+- **Alpine Container**: Data in `./data/alpine/`
+- **Ubuntu Container**: Data in `./data/ubuntu/`
 
 This allows both containers to run simultaneously without data conflicts.
 

@@ -18,7 +18,6 @@ services:
       - ./data/alpine/user3:/home/user3  # User3 home directory
       - ./data/alpine/user4:/home/user4  # User4 home directory
       - ./data/alpine/user5:/home/user5  # User5 home directory
-      - ./logs/alpine:/var/log  # Log files for Alpine
     environment:
       - PLAYIT_SECRET_KEY=${PLAYIT_SECRET_KEY}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
@@ -41,5 +40,4 @@ networks:
     driver: bridge
 
 volumes:
-  data-alpine:
-  logs-alpine: 
+  data-alpine: 

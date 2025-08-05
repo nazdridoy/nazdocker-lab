@@ -28,7 +28,6 @@ cd nazdocker-lab
 ```bash
 # Create separate data directories for Alpine and Ubuntu
 mkdir -p data/{alpine,ubuntu}/{admin,user1,user2,user3,user4,user5}
-mkdir -p logs/{alpine,ubuntu}
 
 # Configure environment variables
 cp .env.example .env

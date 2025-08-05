@@ -174,7 +174,6 @@ ls -la data/ubuntu/
 
 # Recreate data directories
 mkdir -p data/{alpine,ubuntu}/{admin,user1,user2,user3,user4,user5}
-mkdir -p logs/{alpine,ubuntu}
 chmod 755 data/
 ```
 
